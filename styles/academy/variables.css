@@ -1,0 +1,106 @@
+:root {
+  --academy-primary: #F97316;
+  /* Orange */
+  --academy-primary-rgb: 249, 115, 22;
+  --academy-primary-hover: #EA580C;
+  --academy-primary-glow: rgba(var(--academy-primary-rgb), 0.35);
+  --academy-accent: #F59E0B;
+  /* Amber */
+  --academy-accent-light: rgba(245, 158, 11, 0.1);
+  --academy-highlight: rgba(var(--academy-primary-rgb), 0.05);
+
+  /* Light Theme (Default) */
+  /* --academy-bg: #F8FAFC; */
+  --academy-bg: #e7cc9d;
+  --academy-secondary: #F1F5F9;
+  --academy-surface: #FFFFFF;
+  --academy-surface-2: #F1F5F9;
+  --academy-surface-3: #E2E8F0;
+
+  --academy-text-dark: #0F172A;
+  /* Midnight text */
+  --academy-text-medium: #1E293B;
+  --academy-text-light: #475569;
+
+  --academy-border: rgba(15, 23, 42, 0.08);
+  /* Midnight tinted border */
+  --academy-border-bright: rgba(15, 23, 42, 0.12);
+  --academy-border-focus: var(--academy-primary);
+
+  /* Header & top bar - unified light beige, professional */
+  --academy-header-bg: #FAF7F2;
+  --academy-header-accent: #F97316;
+  --academy-header-active-bg: rgba(211, 150, 59, 0.089);
+  --academy-hero-overlay-1: rgba(255, 255, 255, 0.3);
+  --academy-hero-overlay-2: rgba(255, 255, 255, 0.6);
+
+  /* Footer Light */
+  --academy-footer-bg: rgba(255, 255, 255, 0.85);
+  --academy-footer-text: #0F172A;
+  --academy-footer-border: rgba(15, 23, 42, 0.05);
+
+  --academy-radius: 16px;
+  --academy-radius-sm: 10px;
+  --academy-radius-pill: 999px;
+
+  /* Top bar - same light beige as header, theme-colored icons & button */
+  --academy-accent-line: rgba(0, 0, 0, 0.06);
+  --academy-topbar-bg: #FAF7F2;
+  --academy-topbar-text: #374151;
+  --academy-topbar-icon: var(--academy-primary);
+  --academy-topbar-link-hover: var(--academy-primary);
+  --academy-topbar-border: rgba(0, 0, 0, 0.06);
+  --academy-topbar-btn-bg: var(--academy-primary);
+  --academy-topbar-btn-text: #ffffff;
+  --academy-topbar-btn-border: var(--academy-primary);
+  --academy-topbar-btn-hover-bg: var(--academy-primary-hover);
+  --academy-topbar-icon-opacity: 1;
+  --academy-topbar-theme-bg: transparent;
+  --academy-topbar-theme-border: transparent;
+  --academy-topbar-theme-icon: var(--academy-primary);
+}
+
+[data-theme='dark'] {
+  --academy-bg: #0D0D0F;
+  --academy-secondary: #131316;
+  --academy-surface: #18181C;
+  --academy-surface-2: #1F1F25;
+  --academy-surface-3: #26262E;
+
+  --academy-text-dark: #F2F0ED;
+  --academy-text-medium: #B8B4AE;
+  --academy-text-light: #6E6A65;
+
+  --academy-border: rgba(255, 255, 255, 0.07);
+  --academy-border-bright: rgba(255, 255, 255, 0.12);
+  --academy-border-focus: #FF3C1F;
+
+  /* Header & topbar: same dark as page, orange accent (side theme) */
+  --academy-header-bg: #0D0D0F;
+  --academy-header-accent: #F97316;
+  --academy-header-active-bg: rgba(249, 115, 22, 0.2);
+  --academy-highlight: rgba(var(--academy-primary-rgb), 0.08);
+  --academy-hero-overlay-1: rgba(13, 13, 15, 0.4);
+  --academy-hero-overlay-2: rgba(13, 13, 15, 0.8);
+
+  /* Footer Dark */
+  --academy-footer-bg: #1e1c1a;
+  --academy-footer-text: #F2F0ED;
+  --academy-footer-border: rgba(255, 255, 255, 0.08);
+
+  /* Top bar Dark - matches header/page, orange accent */
+  --academy-accent-line: rgba(249, 115, 22, 0.6);
+  --academy-topbar-bg: #0D0D0F;
+  --academy-topbar-text: #e5e5e5;
+  --academy-topbar-icon: #F97316;
+  --academy-topbar-link-hover: #ffffff;
+  --academy-topbar-border: rgba(255, 255, 255, 0.1);
+  --academy-topbar-btn-bg: #F97316;
+  --academy-topbar-btn-text: #ffffff;
+  --academy-topbar-btn-border: #F97316;
+  --academy-topbar-btn-hover-bg: #EA580C;
+  --academy-topbar-icon-opacity: 1;
+  --academy-topbar-theme-bg: #1a1a1c;
+  --academy-topbar-theme-border: rgba(255, 255, 255, 0.12);
+  --academy-topbar-theme-icon: #e5e5e5;
+}

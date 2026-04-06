@@ -1,0 +1,28 @@
+/* ===== COURSE GRID ===== */
+.academy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 64px;
+  transition: opacity 0.3s ease;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+@media (min-width: 1024px) {
+  .academy-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .academy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

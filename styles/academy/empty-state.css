@@ -1,0 +1,11 @@
+/* ===== EMPTY STATE ===== */
+.academy-empty {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--academy-text-light);
+  font-size: 15px;
+  grid-column: 1 / -1;
+  border: 1px dashed var(--academy-border-bright);
+  border-radius: var(--academy-radius);
+  background: var(--academy-surface);
+}

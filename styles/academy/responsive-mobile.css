@@ -1,0 +1,459 @@
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+  /* Top bar: mobile – more padding and spacing for a clean, less compact look */
+  .academy-topbar-inner {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    padding: 14px 16px 16px;
+    gap: 16px;
+    min-height: auto;
+  }
+
+  .academy-topbar-contact {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    overflow: visible;
+  }
+
+  .academy-topbar-contact .academy-topbar-sep {
+    display: none;
+  }
+
+  .academy-topbar-contact .academy-topbar-link {
+    min-width: 0;
+    max-width: 100%;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    word-break: break-all;
+    font-size: 13px;
+    gap: 8px;
+  }
+
+  .academy-topbar-actions {
+    flex-shrink: 0;
+    gap: 10px;
+    align-self: flex-start;
+  }
+
+  .academy-topbar-enquiry-btn {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  /* Main header: more vertical padding on mobile */
+  .academy-header-inner {
+    min-height: 64px;
+    padding: 14px 20px 16px;
+  }
+
+  /* Breadcrumb: more padding on mobile so it doesn't feel cramped */
+  .academy-breadcrumb-wrap {
+    padding: 14px 20px 16px;
+  }
+
+  /* Header */
+  .academy-header-theme-mobile {
+    display: flex;
+    align-items: center;
+  }
+
+  .academy-header-theme-mobile .academy-theme-toggle {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    padding: 0;
+    margin: 0;
+    background: var(--academy-topbar-theme-bg, rgba(0, 0, 0, 0.06));
+    border: 1px solid var(--academy-topbar-theme-border, transparent);
+    color: var(--academy-topbar-theme-icon, var(--academy-text-dark));
+    border-radius: 8px;
+  }
+
+  .academy-header-theme-mobile .academy-theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.08);
+    transform: translateY(0);
+  }
+
+  /* Show only theme icon on mobile (no "Switch Theme" text) */
+  .academy-header-theme-mobile .academy-theme-toggle::after {
+    content: none;
+    display: none;
+  }
+
+  /* Hide top bar theme toggle on mobile so only header theme shows */
+  .academy-topbar-actions .academy-theme-toggle {
+    display: none !important;
+  }
+
+  .academy-header-toggle {
+    display: flex;
+  }
+
+  .academy-header-nav {
+    display: none;
+  }
+
+  .academy-mobile-menu {
+    top: 64px;
+    max-height: calc(100vh - 64px);
+  }
+
+  /* Hero */
+  .academy-page {
+    overflow-x: hidden;
+  }
+
+  .academy-hero {
+    padding: 72px 16px 56px;
+    /* Prevent hero bg from scrolling inside section on mobile */
+    isolation: isolate;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  .academy-hero__background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 0;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  .academy-hero__title {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .academy-hero__subtitle {
+    font-size: 16px;
+  }
+
+  /* Container */
+  .academy-container {
+    padding: 0 16px;
+  }
+
+  /* Sections */
+  .academy-courses-section {
+    padding: 48px 0;
+  }
+
+  .academy-section-header {
+    margin-bottom: 28px;
+  }
+
+  .academy-section-title {
+    font-size: 1.6rem;
+  }
+
+  .academy-section {
+    padding: 48px 0;
+  }
+
+  .academy-section-heading {
+    font-size: 1.4rem;
+    margin-bottom: 24px;
+  }
+
+  /* Grid */
+  .academy-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  /* Cards */
+  .academy-course-card {
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  .academy-course-card__body {
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .academy-course-card__title {
+    font-size: 16px;
+  }
+
+  .academy-course-card__footer {
+    gap: 8px;
+    padding-top: 12px;
+  }
+
+  .academy-course-card__price {
+    font-size: 16px;
+  }
+
+  /* Filter – mobile layout (matches CategoryFilterBar mobile breakpoint) */
+  .academy-filter {
+    margin-bottom: 28px;
+  }
+
+  .academy-filter__desktop {
+    display: none;
+  }
+
+  .academy-filter__mobile {
+    display: block;
+  }
+
+  .academy-filter__list {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .academy-filter__btn {
+    min-height: 44px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  /* CTA */
+  .academy-cta {
+    padding: 64px 16px;
+  }
+
+  .academy-cta__title {
+    font-size: 1.8rem;
+  }
+
+  .academy-cta__subtitle {
+    font-size: 15px;
+  }
+
+  /* Course Detail */
+  .academy-course-hero {
+    padding: 48px 0;
+  }
+
+  .academy-course-hero__layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .academy-course-hero__title {
+    font-size: 1.8rem;
+  }
+
+  .academy-course-hero__subtitle {
+    font-size: 15px;
+  }
+
+  .academy-course-info {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .academy-course-pricing {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .academy-course-pricing__btn {
+    width: 100%;
+  }
+
+  /* About */
+  .academy-about-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .academy-about-title {
+    font-size: 1.8rem;
+  }
+
+  .academy-about-subtitle {
+    font-size: 17px;
+  }
+
+  .academy-about-section {
+    padding: 48px 0;
+  }
+
+  .academy-instructors-section {
+    padding: 48px 0;
+  }
+
+  .academy-about-contact-section {
+    padding: 48px 0;
+  }
+
+  .academy-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .academy-about-stats {
+    position: static;
+  }
+
+  .academy-instructor-image {
+    height: 190px;
+  }
+
+  .academy-about-contact-info-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .academy-about-contact-info-item {
+    padding: 22px;
+  }
+
+  .academy-about-description {
+    font-size: 15px;
+  }
+
+  /* Contact */
+  .academy-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .academy-contact-form-wrapper {
+    padding: 24px;
+  }
+
+  .academy-contact-info-card {
+    padding: 22px;
+  }
+
+  .academy-contact-quick-links {
+    padding: 20px;
+  }
+
+  .academy-contact-faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .academy-contact-faq-item {
+    padding: 18px;
+  }
+
+  .academy-contact-faq-section {
+    padding: 48px 0;
+  }
+
+  .academy-contact-section {
+    padding: 48px 0;
+  }
+
+  /* Footer */
+  .academy-footer {
+    padding: 48px 0 28px;
+    text-align: center;
+  }
+
+  .academy-footer__grid,
+  .academy-footer__grid:has(.academy-footer__social) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .academy-footer__section {
+    align-items: center;
+  }
+
+  .academy-footer__logo-inner {
+    align-items: center;
+  }
+
+  .academy-footer__description {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .academy-footer__links {
+    align-items: center;
+  }
+
+  .academy-footer__links a {
+    white-space: nowrap;
+  }
+
+  .academy-footer__social-links {
+    justify-content: center;
+  }
+
+  .academy-footer__links a:hover,
+  .academy-footer__social-link:hover {
+    transform: none;
+  }
+
+  /* Modal */
+  .academy-modal__content {
+    padding: 28px 20px 24px;
+  }
+
+  .academy-modal__title {
+    font-size: 22px;
+  }
+
+  /* Enquiry modal: compact on mobile */
+  .academy-modal-overlay {
+    padding: 12px;
+    align-items: flex-start;
+    padding-top: max(12px, env(safe-area-inset-top));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .academy-modal--enquiry {
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+    width: 100%;
+  }
+
+  .academy-modal--enquiry .academy-modal__content {
+    padding: 20px 16px 16px;
+  }
+
+  .academy-modal--enquiry .academy-contact-form__title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .academy-modal--enquiry .academy-contact-form {
+    gap: 10px;
+  }
+
+  .academy-modal--enquiry .academy-form-input,
+  .academy-modal--enquiry .academy-form-textarea {
+    padding: 10px 12px;
+    font-size: 16px; /* avoids zoom on iOS */
+  }
+
+  .academy-modal--enquiry .academy-form-textarea {
+    min-height: 64px;
+  }
+
+  /* Curriculum/FAQ */
+  .academy-curriculum__title {
+    padding: 16px 18px;
+    font-size: 14px;
+  }
+
+  .academy-curriculum__body {
+    padding: 4px 18px 16px;
+  }
+
+  .academy-faq__title {
+    padding: 16px 18px;
+    font-size: 14px;
+  }
+
+  .academy-faq__body {
+    padding: 4px 18px 16px;
+  }
+}

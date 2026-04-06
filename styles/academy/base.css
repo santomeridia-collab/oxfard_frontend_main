@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+.academy-page {
+  font-family: 'Outfit', sans-serif;
+  background: var(--academy-bg);
+  color: var(--academy-text-dark);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.academy-hero__title,
+.academy-section-title,
+.academy-section-heading,
+.academy-course-hero__title,
+.academy-cta__title,
+.academy-about-title,
+.academy-modal__title,
+.academy-contact-form__title,
+.academy-footer__title,
+.academy-stats-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  
+}
+
+/* ===== PAGE & LAYOUT ===== */
+.academy-page {
+  background: var(--academy-bg);
+  min-height: 100vh;
+  color: var(--academy-text-dark);
+}
+
+.academy-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  /* internal padding rule 24px */
+}
+
+/* Keyframes used across modal, accordions, header dropdown, mobile menu */
+@keyframes academyFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes academySlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

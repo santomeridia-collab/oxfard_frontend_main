@@ -1,0 +1,283 @@
+/* ===== ABOUT PAGE (NEW UI) ===== */
+.academy-about-section {
+  padding: 80px 0 40px;
+}
+
+.academy-about-top-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 992px) {
+  .academy-about-top-grid {
+    grid-template-columns: 3fr 2fr;
+    gap: 60px;
+  }
+}
+
+.academy-about-text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.academy-about-description,
+.academy-about-text {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--academy-text-medium);
+  margin: 0;
+}
+
+.academy-about-subtitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 16px 0 8px;
+  color: var(--academy-text-dark);
+}
+
+.academy-about-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.academy-feature-item {
+  position: relative;
+  padding-left: 28px;
+  color: var(--academy-text-medium);
+}
+
+.academy-feature-item::before {
+  content: '\2713';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--academy-primary);
+  font-weight: bold;
+}
+
+/* Gallery Styling */
+.academy-about-gallery-section {
+  padding: 40px 0 80px;
+}
+
+.academy-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.academy-gallery-grid--events {
+  gap: 28px;
+  margin-top: 28px;
+}
+
+@media (min-width: 900px) {
+  .academy-gallery-grid--events {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.academy-gallery-card {
+  background: var(--academy-surface);
+  border: 1px solid var(--academy-border);
+  border-radius: var(--academy-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.academy-gallery-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] .academy-gallery-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border-color: var(--academy-primary);
+}
+
+.academy-gallery-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 75%;
+  overflow: hidden;
+}
+
+.academy-gallery-image-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.academy-gallery-card:hover .academy-gallery-image-wrapper img {
+  transform: scale(1.05);
+}
+
+.academy-gallery-info {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.academy-gallery-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--academy-text-dark);
+  margin: 0;
+}
+
+.academy-gallery-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--academy-text-medium);
+  margin: 0;
+}
+
+/* Styled gallery card (Events/Gallery page) – rounded, white body, shadow, center title */
+.academy-gallery-card--styled {
+  background: #fff;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+[data-theme='dark'] .academy-gallery-card--styled {
+  background: var(--academy-surface);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.academy-gallery-card--styled:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme='dark'] .academy-gallery-card--styled:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.academy-gallery-card--styled .academy-gallery-card__image-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 75%;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: var(--academy-bg-muted);
+}
+
+.academy-gallery-card--styled .academy-gallery-card__image-wrap img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.academy-gallery-card--styled:hover .academy-gallery-card__image-wrap img {
+  transform: scale(1.04);
+}
+
+.academy-gallery-card--styled .academy-gallery-card__body {
+  padding: 20px 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.academy-gallery-card--styled .academy-gallery-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--academy-text-dark);
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+[data-theme='dark'] .academy-gallery-card--styled .academy-gallery-card__title {
+  color: var(--academy-text-dark);
+}
+
+/* Plain grid card (no title/description) */
+.academy-gallery-card--plain {
+  border: none;
+  background: transparent;
+}
+
+/* "+More" overlay on the 3rd card */
+.academy-gallery-more-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.academy-gallery-more-overlay:hover {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+/* "Show Less" button below gallery */
+.academy-gallery-show-less-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.academy-gallery-show-less-btn {
+  padding: 10px 28px;
+  border: 1.5px solid var(--academy-primary, #ff4d00);
+  background: transparent;
+  color: var(--academy-primary, #ff4d00);
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.academy-gallery-show-less-btn:hover {
+  background: var(--academy-primary, #ff4d00);
+  color: #fff;
+}
+
+/* Gallery sub-groups (if splitting metadata vs plain) */
+.academy-gallery-group {
+  margin-top: 40px;
+}
+
+.academy-gallery-subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--academy-text-dark);
+  opacity: 0.85;
+  margin-bottom: 24px;
+}
+

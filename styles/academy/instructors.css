@@ -1,0 +1,263 @@
+/* ===== INSTRUCTORS SECTION — AUTO SLIDER ===== */
+.academy-instructors-section {
+  padding: 64px 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--academy-bg);
+  /* background: rgba(255, 255, 255, 0.85); */
+  border-top: 1px solid var(--academy-border);
+  border-bottom: 1px solid var(--academy-border);
+}
+
+.academy-instructors-section::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(var(--academy-primary-rgb), 0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.academy-instructors-section .academy-container {
+  text-align: center;
+}
+
+.academy-instructors-section .academy-section-title {
+  color: var(--academy-text-dark);
+  margin-bottom: 8px;
+  position: relative;
+  display: inline-block;
+}
+
+.academy-instructors-section .academy-section-title::after {
+  content: '';
+  display: block;
+  margin-top: 8px;
+  height: 3px;
+  width: 48px;
+  background: var(--academy-primary);
+  border-radius: 999px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.academy-instructors-subtitle {
+  font-size: 14px;
+  color: var(--academy-text-light);
+  margin: 0 0 36px;
+}
+
+/* Centered layout for ≤4 instructors */
+.academy-instructors-centered-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 12px;
+}
+
+/* ---- Slider track ---- */
+.academy-instructors-slider-viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.academy-instructors-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: instructorSlide 28s linear infinite;
+}
+
+.academy-instructors-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes instructorSlide {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Keep old grid alias for backward compat — hidden now */
+.academy-instructors-grid {
+  display: none;
+}
+
+/* ---- Individual card ---- */
+.academy-instructor-card {
+  flex: 0 0 180px;
+  width: 180px;
+  background: var(--academy-surface-2);
+  border: 1px solid var(--academy-border-bright);
+  border-radius: 16px;
+  padding: 24px 16px 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: default;
+  position: relative;
+}
+
+.academy-instructor-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--academy-primary);
+  box-shadow: 0 16px 40px rgba(var(--academy-primary-rgb), 0.18),
+    0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* ---- Circular avatar ---- */
+.academy-instructor-image-wrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  margin: 0 auto 14px;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid var(--academy-border-bright);
+  background: var(--academy-surface-3);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.academy-instructor-card:hover .academy-instructor-image-wrapper {
+  border-color: var(--academy-primary);
+  box-shadow: 0 0 0 4px rgba(var(--academy-primary-rgb), 0.18);
+}
+
+.academy-instructor-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+  transition: transform 0.4s ease;
+}
+
+.academy-instructor-card:hover .academy-instructor-image {
+  transform: scale(1.08);
+}
+
+.academy-instructor-avatar-fallback {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  margin: 0 auto 14px;
+  background: linear-gradient(135deg, var(--academy-primary) 0%, var(--academy-accent) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ---- Text ---- */
+.academy-instructor-info {
+  padding: 0;
+}
+
+.academy-instructor-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--academy-text-dark);
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.academy-instructor-specialization {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--academy-primary);
+  margin: 0 0 8px;
+  font-weight: 700;
+  background: rgba(var(--academy-primary-rgb), 0.10);
+  border: 1px solid rgba(var(--academy-primary-rgb), 0.22);
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.academy-instructor-bio {
+  font-size: 12px;
+  color: var(--academy-text-light);
+  margin: 0;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* About contact section */
+.academy-about-contact-section {
+  padding: 72px 0;
+  background: var(--academy-bg);
+}
+
+.academy-about-contact-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.academy-about-contact-info-item {
+  background: var(--academy-surface);
+  padding: 28px;
+  border-radius: var(--academy-radius);
+  border: 1px solid var(--academy-border);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.academy-about-contact-info-item:hover {
+  border-color: var(--academy-primary);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(var(--academy-primary-rgb), 0.1);
+}
+
+.academy-about-contact-info-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--academy-text-dark);
+  margin: 0 0 10px;
+}
+
+.academy-about-contact-info-link {
+  color: var(--academy-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  display: block;
+  transition: color 0.2s;
+}
+
+.academy-about-contact-info-link:hover {
+  color: #ff6b50;
+}
+
+.academy-about-contact-info-text {
+  color: var(--academy-text-light);
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+}

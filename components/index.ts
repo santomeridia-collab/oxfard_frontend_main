@@ -1,0 +1,10 @@
+export { default as AcademyHeader } from './AcademyHeader';
+export { default as AcademyHero } from './AcademyHero';
+export { default as CategoryFilterBar } from './CategoryFilterBar';
+export { default as CourseCard } from './CourseCard';
+export { default as CourseGrid } from './CourseGrid';
+export { default as CourseDetailHero } from './CourseDetailHero';
+export { default as CurriculumAccordion } from './CurriculumAccordion';
+export { default as InstructorSection } from './InstructorSection';
+export { default as CTASection } from './CTASection';
+export { default as FAQAccordion } from './FAQAccordion';

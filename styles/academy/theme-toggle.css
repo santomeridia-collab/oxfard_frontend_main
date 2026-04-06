@@ -1,0 +1,52 @@
+/* ===== THEME TOGGLE ===== */
+.academy-theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--academy-surface-2);
+  border: 1px solid var(--academy-border);
+  color: var(--academy-text-dark);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  margin-left: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.academy-theme-toggle:hover {
+  background: var(--academy-primary);
+  border-color: var(--academy-primary);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--academy-primary-glow);
+}
+
+.academy-theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.5s ease;
+}
+
+.academy-theme-toggle:hover svg {
+  transform: rotate(15deg) scale(1.1);
+}
+
+/* Theme toggle: icon only at all screen sizes (no "Switch Theme" text) */
+@media (max-width: 991px) {
+  .academy-theme-toggle {
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    padding: 0;
+    margin: 0 0 0 15px;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .academy-header-theme-mobile .academy-theme-toggle {
+    margin: 0;
+  }
+}

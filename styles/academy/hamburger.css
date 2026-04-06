@@ -1,0 +1,44 @@
+/* ===== HAMBURGER TOGGLE ===== */
+/* Theme toggle in main header: visible only on mobile (left of hamburger) */
+.academy-header-theme-mobile {
+  display: none;
+}
+
+.academy-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.academy-header-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+.academy-header-toggle__line {
+  width: 22px;
+  height: 2px;
+  background: var(--academy-text-dark);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.academy-header-toggle.is-open .academy-header-toggle__line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.academy-header-toggle.is-open .academy-header-toggle__line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.academy-header-toggle.is-open .academy-header-toggle__line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}

@@ -1,0 +1,170 @@
+/* ===== FOOTER ===== */
+.academy-footer {
+  background: var(--academy-footer-bg);
+  border-top: 1px solid var(--academy-footer-border);
+  padding: 72px 0 36px;
+  color: var(--academy-footer-text);
+  margin-top: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.02);
+}
+
+[data-theme='dark'] .academy-footer {
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Subtle glow top-left of footer */
+.academy-footer::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle,
+      rgba(var(--academy-primary-rgb), 0.06) 0%,
+      transparent 65%);
+  pointer-events: none;
+}
+
+.academy-footer__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 64px;
+  margin-bottom: 56px;
+  position: relative;
+  z-index: 1;
+}
+.academy-footer__grid:has(.academy-footer__social) {
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+}
+
+.academy-footer__section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.academy-footer__logo {
+  text-decoration: none;
+}
+
+.academy-footer__logo-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.academy-footer__shop-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--academy-footer-text);
+  letter-spacing: -0.02em;
+}
+
+.academy-footer__description {
+  font-size: 14px;
+  color: var(--academy-footer-text);
+  opacity: 0.8;
+  line-height: 1.75;
+  max-width: 300px;
+}
+
+.academy-footer__title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700 !important; /* Quick links & Legal - bold */
+  color: var(--academy-text-dark);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.academy-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.academy-footer__links a {
+  color: var(--academy-text-medium);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 300;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.academy-footer__links a:hover {
+  color: var(--academy-primary);
+  transform: translateX(4px);
+}
+
+.academy-footer__links a.is-active,
+.academy-footer__logo.is-active .academy-footer__shop-name {
+  color: var(--academy-primary);
+}
+
+/* Follow us: same list/link style as Quick Links & Legal */
+.academy-footer__social-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.academy-footer__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.08);
+  color: var(--academy-footer-text);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+.academy-footer__social-link svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.academy-footer__social-link:hover {
+  background: var(--academy-primary);
+  color: #fff;
+  transform: translateY(-2px);
+}
+[data-theme='dark'] .academy-footer__social-link {
+  background: rgba(255, 255, 255, 0.08);
+}
+[data-theme='dark'] .academy-footer__social-link:hover {
+  background: var(--academy-primary);
+  color: #fff;
+}
+
+.academy-footer__bottom {
+  border-top: 1px solid var(--academy-footer-border);
+  padding-top: 28px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.academy-footer__copyright {
+  font-size: 13px;
+  color: var(--academy-text-light);
+}
+
+.academy-footer__copyright span {
+  font-weight: 700;
+  color: var(--academy-primary);
+}

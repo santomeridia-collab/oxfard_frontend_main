@@ -1,0 +1,167 @@
+
+/* ===== INSTRUCTOR SECTION ===== */
+.academy-instructor-section {
+  background: var(--academy-bg);
+}
+
+.academy-instructor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 580px;
+  padding: 28px;
+  background: var(--academy-surface);
+  border-radius: var(--academy-radius);
+  border: 1px solid var(--academy-border-bright);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.academy-instructor:hover {
+  border-color: var(--academy-primary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(var(--academy-primary-rgb), 0.1);
+}
+
+.academy-instructor__header {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.academy-instructor__photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--academy-primary);
+  box-shadow: 0 0 0 4px rgba(var(--academy-primary-rgb), 0.15);
+}
+
+.academy-instructor__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.academy-instructor__name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--academy-text-dark);
+  letter-spacing: -0.01em;
+}
+
+.academy-instructor__designation {
+  font-size: 12px;
+  color: var(--academy-primary);
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.academy-instructor__bio {
+  font-size: 14px;
+  color: var(--academy-text-medium);
+  line-height: 1.8;
+  margin: 0;
+}
+
+
+/* ===== FAQ ACCORDION ===== */
+.academy-faq-section {
+  background: var(--academy-surface);
+}
+
+.academy-faq {
+  background: var(--academy-surface-2);
+  border-radius: var(--academy-radius);
+  border: 1px solid var(--academy-border-bright);
+  overflow: hidden;
+  max-width: 860px;
+}
+
+.academy-faq__item {
+  border-top: 1px solid var(--academy-border);
+  transition: background 0.2s ease;
+}
+
+.academy-faq__item:first-child {
+  border-top: none;
+}
+
+.academy-faq__item:hover {
+  background: var(--academy-surface-3);
+}
+
+.academy-faq__title {
+  width: 100%;
+  text-align: left;
+  padding: 18px 24px;
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  color: var(--academy-text-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  letter-spacing: -0.01em;
+}
+
+.academy-faq__title:hover {
+  color: var(--academy-primary);
+}
+
+.academy-faq__question {
+  flex: 1;
+}
+
+.academy-faq__icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--academy-surface-3);
+  border: 1px solid var(--academy-border-bright);
+  color: var(--academy-primary);
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.academy-faq__title:hover .academy-faq__icon {
+  background: var(--academy-primary);
+  color: #fff;
+  border-color: var(--academy-primary);
+}
+
+.academy-faq__body {
+  padding: 4px 24px 20px;
+  background: var(--academy-bg);
+  animation: slideDown 0.25s ease;
+  border-top: 1px solid var(--academy-border);
+}
+
+.academy-faq__body p {
+  font-size: 14px;
+  color: var(--academy-text-medium);
+  line-height: 1.85;
+  margin: 0;
+}
+
+.academy-not-found {
+  text-align: center;
+  padding: 64px 24px;
+  color: var(--academy-text-light);
+  font-size: 16px;
+}

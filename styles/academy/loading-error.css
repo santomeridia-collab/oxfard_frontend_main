@@ -1,0 +1,31 @@
+/* ===== LOADING / ERROR / NOT FOUND ===== */
+.academy-loading {
+  text-align: center;
+  color: var(--academy-text-light);
+  padding: 32px;
+  font-size: 15px;
+}
+
+.academy-error {
+  text-align: center;
+  color: #ff7b65;
+  padding: 24px;
+  font-size: 15px;
+}
+
+.academy-loading-container {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.academy-error-message {
+  padding: 16px 20px;
+  background: rgba(var(--academy-primary-rgb), 0.08);
+  border: 1px solid rgba(var(--academy-primary-rgb), 0.2);
+  border-radius: var(--academy-radius-sm);
+  color: #ff7b65;
+  font-size: 14px;
+  margin-top: 24px;
+}

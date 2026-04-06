@@ -1,0 +1,361 @@
+/* ===== COURSE DETAIL PAGE ===== */
+
+/* Course Hero Section - Two Column */
+/* ===== COURSE DETAIL HERO ===== */
+.academy-course-hero {
+  padding: 72px 0 64px;
+  background: var(--academy-surface);
+  border-bottom: 1px solid var(--academy-border);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background glow behind course hero */
+.academy-course-hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle,
+      rgba(var(--academy-primary-rgb), 0.1) 0%,
+      transparent 65%);
+  pointer-events: none;
+}
+
+.academy-course-hero__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.academy-course-hero__left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.academy-course-hero__title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-weight: 800;
+  margin: 0;
+  color: var(--academy-text-dark);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.academy-course-hero__subtitle {
+  font-size: 16px;
+  color: var(--academy-text-medium);
+  margin: 0;
+  line-height: 1.75;
+}
+
+/* Course meta info grid */
+.academy-course-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 20px;
+  background: var(--academy-surface-2);
+  border-radius: var(--academy-radius-sm);
+  border: 1px solid var(--academy-border-bright);
+}
+
+.academy-course-info__item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.academy-course-info__label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--academy-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.academy-course-info__value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--academy-text-dark);
+}
+
+.academy-course-info__badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 12px;
+  background: var(--academy-accent-light);
+  color: var(--academy-accent);
+  border-radius: var(--academy-radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(167, 139, 250, 0.25);
+}
+
+/* Pricing + enroll block */
+.academy-course-pricing {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--academy-surface-2);
+  border-radius: var(--academy-radius-sm);
+  border: 1px solid var(--academy-border-bright);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle red glow behind pricing */
+.academy-course-pricing::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: -20px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle,
+      rgba(var(--academy-primary-rgb), 0.12) 0%,
+      transparent 70%);
+  pointer-events: none;
+}
+
+.academy-course-pricing__price {
+  font-family: 'Outfit', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--academy-primary);
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+}
+
+.academy-course-pricing__discount {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--academy-text-light);
+  margin-left: 4px;
+}
+
+.academy-course-pricing__btn {
+  padding: 14px 30px;
+  background: var(--academy-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--academy-radius-pill);
+  font-weight: 700;
+  font-size: 15px;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex: 1;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 24px var(--academy-primary-glow);
+  position: relative;
+  z-index: 1;
+}
+
+.academy-course-pricing__btn:hover {
+  background: var(--academy-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px var(--academy-primary-glow);
+}
+
+.academy-course-hero__right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.academy-course-hero__img {
+  width: 100%;
+  max-width: 480px;
+  border-radius: var(--academy-radius);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7),
+    0 0 0 1px var(--academy-border-bright);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.academy-course-hero__img:hover {
+  transform: scale(1.02) rotate(0.5deg);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(var(--academy-primary-rgb), 0.2);
+}
+
+
+/* ===== COURSE CONTENT SECTIONS ===== */
+.academy-section {
+  padding: 64px 0;
+  background: var(--academy-bg);
+}
+
+.academy-section:nth-child(odd) {
+  background: var(--academy-surface);
+}
+
+.academy-section-heading {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 800;
+  margin: 0 0 32px;
+  color: var(--academy-text-dark);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Red vertical bar accent before section heading */
+.academy-section-heading::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 1.2em;
+  background: var(--academy-primary);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.academy-overview__text {
+  font-size: 16px;
+  color: var(--academy-text-medium);
+  line-height: 1.9;
+  margin: 0;
+  max-width: 800px;
+}
+
+.academy-overview {
+  background: var(--academy-bg);
+}
+
+
+/* ===== CURRICULUM ACCORDION ===== */
+.academy-curriculum-section {
+  background: var(--academy-surface);
+}
+
+.academy-curriculum {
+  background: var(--academy-surface-2);
+  border-radius: var(--academy-radius);
+  border: 1px solid var(--academy-border-bright);
+  overflow: hidden;
+}
+
+.academy-curriculum__item {
+  border-top: 1px solid var(--academy-border);
+  transition: background 0.2s ease;
+}
+
+.academy-curriculum__item:first-child {
+  border-top: none;
+}
+
+.academy-curriculum__title {
+  width: 100%;
+  text-align: left;
+  padding: 18px 24px;
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  color: var(--academy-text-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+}
+
+.academy-curriculum__title:hover {
+  background: var(--academy-surface-3);
+  color: var(--academy-primary);
+  padding-left: 28px;
+}
+
+.academy-curriculum__chev {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--academy-surface-3);
+  border: 1px solid var(--academy-border-bright);
+  color: var(--academy-primary);
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.academy-curriculum__title:hover .academy-curriculum__chev {
+  background: var(--academy-primary);
+  color: #fff;
+  border-color: var(--academy-primary);
+}
+
+.academy-curriculum__body {
+  padding: 8px 24px 20px;
+  background: var(--academy-bg);
+  animation: slideDown 0.25s ease;
+}
+
+.academy-curriculum__body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.academy-curriculum__body li {
+  padding: 10px 14px 10px 36px;
+  position: relative;
+  color: var(--academy-text-medium);
+  font-size: 14px;
+  line-height: 1.6;
+  background: var(--academy-surface);
+  border-radius: var(--academy-radius-sm);
+  border: 1px solid var(--academy-border);
+  transition: all 0.2s ease;
+}
+
+.academy-curriculum__body li:hover {
+  border-color: var(--academy-border-bright);
+  color: var(--academy-text-dark);
+  padding-left: 40px;
+}
+
+.academy-curriculum__body li::before {
+  content: '▶';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--academy-primary);
+  font-size: 9px;
+}
+
+.academy-lesson-preview {
+  font-size: 11px;
+  color: var(--academy-accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-left: 8px;
+  background: var(--academy-accent-light);
+  padding: 2px 8px;
+  border-radius: var(--academy-radius-pill);
+}
+

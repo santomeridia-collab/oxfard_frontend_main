@@ -1,0 +1,28 @@
+
+@media (max-width: 576px) {
+  .academy-filter__desktop {
+    display: none;
+  }
+
+  .academy-filter__mobile {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .academy-about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .academy-instructors-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .academy-footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
