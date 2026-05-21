@@ -1,201 +1,310 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
+// src/context/AcademyContext.tsx
+
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useCallback,
+} from "react";
+
 import API_ENDPOINTS from "../config/endpoints";
 
-export interface AcademyData {
-    courses: any[];
-    course_categories: any[];
-    instructors: any[];
-    shop_details?: any;
-    [key: string]: any;
-}
+// =========================
+// TYPES
+// =========================
 
 interface AcademyContextType {
-    storeId: string;
-    allData: AcademyData | null;
-    loading: boolean;
-    error: string | null;
-    currencySymbol: string;
-    refetch: () => void;
-    theme: 'light' | 'dark';
-    toggleTheme: () => void;
+  heroData: any[];
+  categories: any[];
+  courses: any[];
+  gallery: any[];
+  events: any[];
+
+  loading: boolean;
+  error: string | null;
+
+  theme: "light" | "dark";
+  toggleTheme: () => void;
+
+  // =========================
+  // API FUNCTIONS
+  // =========================
+
+  getCoursesByCategory: (category: string) => Promise<any[]>;
+
+  getCourseDetails: (courseId: string) => Promise<any>;
+
+  getGalleryDetails: (galleryId: string) => Promise<any>;
+
+  getEventDetails: (eventId: string) => Promise<any>;
+
+  refetch: () => void;
 }
 
-const AcademyContext = createContext<AcademyContextType | undefined>(undefined);
+const AcademyContext = createContext<AcademyContextType | undefined>(
+  undefined
+);
 
-/**
- * Extract subdomain from hostname (simplified local copy)
- */
-function extractSubdomain(hostname: string): string | null {
-    if (hostname.includes(".localhost")) {
-        const parts = hostname.split(".");
-        if (parts.length >= 2 && parts[0]) return parts[0];
-    }
-    if (hostname === "localhost" || hostname === "127.0.0.1") return null;
-    const parts = hostname.split(".");
-    if (parts.length >= 3) return parts[0];
-    return null;
-}
+// =========================
+// PROVIDER
+// =========================
 
-/**
- * Get currency symbol from currency code
- */
-function getCurrencySymbol(currencyCode: string): string {
-    try {
-        return (0).toLocaleString('en-US', {
-            style: 'currency',
-            currency: currencyCode,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).replace(/\d/g, '').trim();
-    } catch (e) {
-        return '₹';
-    }
-}
+export function AcademyProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  // =========================
+  // STATES
+  // =========================
 
-export function AcademyProvider({ children, initialStoreId }: { children: ReactNode, initialStoreId?: string }) {
-    const [storeId, setStoreId] = useState<string>(initialStoreId || "");
-    const [allData, setAllData] = useState<AcademyData | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-    const [refreshKey, setRefreshKey] = useState(0);
-    const [currencySymbol, setCurrencySymbol] = useState('₹');
-    const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-        const savedTheme = localStorage.getItem('academy-theme');
-        return (savedTheme as 'light' | 'dark') || 'dark';
+  const [heroData, setHeroData] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [courses, setCourses] = useState<any[]>([]);
+  const [gallery, setGallery] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    const savedTheme = localStorage.getItem("academy-theme");
+    return (savedTheme as "light" | "dark") || "dark";
+  });
+
+  // =========================
+  // THEME
+  // =========================
+
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => {
+      const newTheme = prev === "light" ? "dark" : "light";
+
+      localStorage.setItem("academy-theme", newTheme);
+
+      return newTheme;
     });
+  }, []);
 
-    const toggleTheme = useCallback(() => {
-        setTheme(prev => {
-            const newTheme = prev === 'light' ? 'dark' : 'light';
-            localStorage.setItem('academy-theme', newTheme);
-            return newTheme;
-        });
-    }, []);
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
 
-    // Apply theme to body
-    useEffect(() => {
-        document.body.setAttribute('data-theme', theme);
-    }, [theme]);
+  // =========================
+  // REFETCH
+  // =========================
 
-    const refetch = useCallback(() => {
-        setRefreshKey(k => k + 1);
-    }, []);
+  const refetch = useCallback(() => {
+    setRefreshKey((prev) => prev + 1);
+  }, []);
 
-    // 1. Resolve storeId if not provided
-    useEffect(() => {
-        if (initialStoreId) {
-            setStoreId(initialStoreId);
-            return;
-        }
+  // =========================
+  // FETCH ALL HOME DATA
+  // =========================
 
-        const resolveShop = async () => {
-            const host = window.location.hostname;
-            const subdomain = extractSubdomain(host);
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-            if (!subdomain) {
-                // Fallback for local dev if needed
-                const fallbackId = import.meta.env.VITE_APP_STORE_ID;
-                if (fallbackId) setStoreId(fallbackId);
-                else setError("No store resolution possible");
-                return;
-            }
+        const [
+          heroRes,
+          categoriesRes,
+          coursesRes,
+          galleryRes,
+          eventsRes,
+        ] = await Promise.all([
+          fetch(API_ENDPOINTS.HERO.GET_ALL),
 
-            try {
-                const res = await fetch(API_ENDPOINTS.PUBLIC.RESOLVE_SHOP(host, subdomain));
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.store_id) setStoreId(data.store_id);
-                }
-            } catch (err) {
-                console.error("AcademyContext: Failed to resolve shop", err);
-            }
-        };
+          fetch(API_ENDPOINTS.COURSES.GET_ALL_CATEGORIES),
 
-        resolveShop();
-    }, [initialStoreId]);
+          fetch(API_ENDPOINTS.COURSES.GET_ALL),
 
-    // 2. Fetch Academy Data
-    useEffect(() => {
-        if (!storeId) return;
+          fetch(API_ENDPOINTS.GALLERY.GET_ALL),
 
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const res = await fetch(API_ENDPOINTS.GENERAL.GET_ALL_DATA(storeId));
-                if (!res.ok) throw new Error("Failed to fetch academy data");
-                const data = await res.json();
+          fetch(API_ENDPOINTS.EVENTS.GET_ALL),
+        ]);
 
-                // We could also fetch courses separately here if needed, 
-                // but usually all-data includes them.
-                setAllData(data);
-                setError(null);
-            } catch (err: any) {
-                setError(err.message || "An error occurred");
-            } finally {
-                setLoading(false);
-            }
-        };
+        // =========================
+        // CONVERT TO JSON
+        // =========================
 
-        fetchData();
-    }, [storeId, refreshKey]);
+        const heroJson = await heroRes.json();
+        const categoriesJson = await categoriesRes.json();
+        const coursesJson = await coursesRes.json();
+        const galleryJson = await galleryRes.json();
+        const eventsJson = await eventsRes.json();
 
-    // 3. Fetch Currency Symbol based on location
-    useEffect(() => {
-        const detectCurrency = async () => {
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.currency) {
-                        setCurrencySymbol(getCurrencySymbol(data.currency));
-                    }
-                }
-            } catch (err) {
-                console.error("AcademyContext: Failed to detect currency", err);
-            }
-        };
-        detectCurrency();
-    }, []);
+        // =========================
+        // SAVE DATA
+        // =========================
 
-    // 4. Update Favicon dynamically
-    useEffect(() => {
-        const logoUrl = allData?.logos?.[0]?.file_url;
-        if (logoUrl) {
-            let link: HTMLLinkElement | null = document.querySelector("link[rel~='icon']");
-            if (!link) {
-                link = document.createElement('link');
-                link.rel = 'icon';
-                document.getElementsByTagName('head')[0].appendChild(link);
-            }
-            link.href = logoUrl;
-        }
-    }, [allData]);
+        setHeroData(heroJson || []);
 
-    return (
-        <AcademyContext.Provider value={{ storeId, allData, loading, error, currencySymbol, refetch, theme, toggleTheme }}>
-            {children}
-        </AcademyContext.Provider>
-    );
+        setCategories(categoriesJson || []);
+
+        setCourses(coursesJson || []);
+
+        setGallery(galleryJson || []);
+
+        setEvents(eventsJson || []);
+      } catch (err: any) {
+        console.error("AcademyContext Error:", err);
+
+        setError(err.message || "Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllData();
+  }, [refreshKey]);
+
+  // =========================
+  // GET COURSES BY CATEGORY
+  // =========================
+
+  const getCoursesByCategory = async (category: string) => {
+    try {
+      const response = await fetch(
+        API_ENDPOINTS.COURSES.GET_BY_CATEGORY(category)
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch category courses");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
+
+  // =========================
+  // GET COURSE DETAILS
+  // =========================
+
+  const getCourseDetails = async (courseId: string) => {
+    try {
+      const response = await fetch(
+        API_ENDPOINTS.COURSES.GET_DETAILS(courseId)
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch course details");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  // =========================
+  // GET GALLERY DETAILS
+  // =========================
+
+  const getGalleryDetails = async (galleryId: string) => {
+    try {
+      const response = await fetch(
+        API_ENDPOINTS.GALLERY.GET_DETAILS(galleryId)
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch gallery details");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  // =========================
+  // GET EVENT DETAILS
+  // =========================
+
+  const getEventDetails = async (eventId: string) => {
+    try {
+      const response = await fetch(
+        API_ENDPOINTS.EVENTS.GET_DETAILS(eventId)
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch event details");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  // =========================
+  // PROVIDER
+  // =========================
+
+  return (
+    <AcademyContext.Provider
+      value={{
+        heroData,
+        categories,
+        courses,
+        gallery,
+        events,
+
+        loading,
+        error,
+
+        theme,
+        toggleTheme,
+
+        getCoursesByCategory,
+        getCourseDetails,
+        getGalleryDetails,
+        getEventDetails,
+
+        refetch,
+      }}
+    >
+      {children}
+    </AcademyContext.Provider>
+  );
 }
+
+// =========================
+// CUSTOM HOOK
+// =========================
 
 export function useAcademyData() {
-    const context = useContext(AcademyContext);
-    if (context === undefined) {
-        throw new Error("useAcademyData must be used within an AcademyProvider");
-    }
-    return context;
+  const context = useContext(AcademyContext);
+
+  if (!context) {
+    throw new Error(
+      "useAcademyData must be used within AcademyProvider"
+    );
+  }
+
+  return context;
 }
 
-// Compatibility aliases - so we don't have to change the logic inside 20+ files
+// Compatibility alias
 export const useShopData = useAcademyData;
 
 export function useStore() {
-    const context = useAcademyData();
-    return {
-        storeId: context.storeId,
-        store: context.allData?.shop_details || null,
-        loading: context.loading,
-        error: context.error,
-        currencySymbol: context.currencySymbol
-    };
+  const context = useAcademyData();
+
+  return {
+    loading: context.loading,
+    error: context.error,
+  };
 }

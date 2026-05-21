@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useShopData } from '../context/AcademyContext';
+import { useAcademyData, useShopData } from '../context/AcademyContext';
 import { getPrimaryDisplayContact } from '../utils/academyUtils';
 import ThemeToggle from './ThemeToggle';
 import Breadcrumb from './Breadcrumb';
 import API_ENDPOINTS from '../config/endpoints';
 import '../styles/academy.css';
+
 
 const COUNTRY_CODES = [
   { code: '+1', country: 'USA/Canada' },
@@ -49,8 +50,20 @@ export default function AcademyHeader() {
   const { allData, storeId } = useShopData();
   const location = useLocation();
 
-  const categories = allData?.course_categories || [];
+  const {
+     categories,
+     courses,
+     loading,
+     error,
+   } = useAcademyData();
+ 
+   // =========================
+   // NORMALIZE CATEGORY DATA
+   // =========================
+ 
+   const allCategories = categories?.data || [];
   const { phone: shopNumber, email: shopEmail } = getPrimaryDisplayContact(allData);
+  console.log('categories in header:', allCategories);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -333,42 +346,44 @@ export default function AcademyHeader() {
           <Link to="#" className="academy-header-link" onClick={(e) => e.preventDefault()}>Verification</Link>
 
           {/* Courses label with dropdown (click to open, outside click to close) */}
-          <div className="academy-header-link-dropdown" ref={coursesDropdownRef}>
-            <button
-              type="button"
-              className={`academy-header-link academy-header-link--with-arrow ${dropdownOpen ? 'is-open' : ''} ${isActive('/academy/courses') ? 'active' : ''}`}
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              aria-expanded={dropdownOpen}
-              aria-haspopup="true"
-            >
-              <span>Courses</span>
-              <span className="academy-header-link__arrow">▾</span>
-            </button>
+        {/* Courses label with dropdown */}
+<div className="academy-header-link-dropdown" ref={coursesDropdownRef}>
+  <button
+    type="button"
+    className={`academy-header-link academy-header-link--with-arrow ${
+      dropdownOpen ? 'is-open' : ''
+    } ${isActive('/academy/courses') ? 'active' : ''}`}
+    onClick={() => setDropdownOpen(!dropdownOpen)}
+    aria-expanded={dropdownOpen}
+    aria-haspopup="true"
+  >
+    <span>Courses</span>
+    <span className="academy-header-link__arrow">▾</span>
+  </button>
 
-            {dropdownOpen && categories.length > 0 && (
-              <div className="academy-header-dropdown">
-                <Link
-                  to="/academy/courses"
-                  className="academy-dropdown-item"
-                  onClick={() => setDropdownOpen(false)}
-                >
-                  All Courses
-                </Link>
-                {categories
-                  .filter(cat => cat.category_id) // Only show categories with valid IDs
-                  .map((cat) => (
-                    <Link
-                      key={cat.category_id}
-                      to={`/academy/courses?category=${cat.category_id}`}
-                      className="academy-dropdown-item"
-                      onClick={() => setDropdownOpen(false)}
-                    >
-                      {cat.name}
-                    </Link>
-                  ))}
-              </div>
-            )}
-          </div>
+{dropdownOpen && allCategories.length > 0 && (
+  <div className="academy-header-dropdown">
+    <Link
+      to="/academy/courses"
+      className="academy-dropdown-item"
+      onClick={() => setDropdownOpen(false)}
+    >
+      All Courses
+    </Link>
+
+    {allCategories.map((cat, index) => (
+      <Link
+        key={index}
+        to={`/academy/courses?category=${encodeURIComponent(cat)}`}
+        className="academy-dropdown-item"
+        onClick={() => setDropdownOpen(false)}
+      >
+        {cat}
+      </Link>
+    ))}
+  </div>
+)}
+</div>
 
           <Link to="/academy/events-gallery" className={`academy-header-link ${isActive('/academy/events-gallery') ? 'active' : ''}`}>Gallery / Events</Link>
           <Link to="/academy/news" className={`academy-header-link ${isActive('/academy/news') ? 'active' : ''}`}>News / Blog</Link>
@@ -431,23 +446,20 @@ export default function AcademyHeader() {
                   All Courses
                   <span className="academy-mobile-menu__dropdown-arrow">›</span>
                 </button>
-
-                {mobileCoursesDropdownOpen && categories.length > 0 && (
-                  <div className="academy-mobile-menu__submenu">
-                    {categories
-                      .filter(cat => cat.category_id) // Only show categories with valid IDs
-                      .map((cat) => (
-                        <Link
-                          key={cat.category_id}
-                          to={`/academy/courses?category=${cat.category_id}`}
-                          className="academy-mobile-menu__sublink"
-                          onClick={closeMobileMenu}
-                        >
-                          {cat.name}
-                        </Link>
-                      ))}
-                  </div>
-                )}
+{mobileCoursesDropdownOpen && allCategories.length > 0 && (
+  <div className="academy-mobile-menu__submenu">
+    {allCategories.map((cat, index) => (
+      <Link
+        key={index}
+        to={`/academy/courses?category=${encodeURIComponent(cat)}`}
+        className="academy-mobile-menu__sublink"
+        onClick={closeMobileMenu}
+      >
+        {cat}
+      </Link>
+    ))}
+  </div>
+)}
               </div>
 
               <Link
