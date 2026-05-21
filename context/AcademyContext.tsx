@@ -7,6 +7,7 @@ import React, {
   useEffect,
   ReactNode,
   useCallback,
+  useMemo,
 } from "react";
 
 import API_ENDPOINTS from "../config/endpoints";
@@ -16,11 +17,16 @@ import API_ENDPOINTS from "../config/endpoints";
 // =========================
 
 interface AcademyContextType {
-  heroData: any[];
-  categories: any[];
-  courses: any[];
-  gallery: any[];
-  events: any[];
+  heroData: any;
+  categories: any;
+  courses: any;
+  gallery: any;
+  events: any;
+  instructors: any;
+  news: any;
+  blog: any;
+  allData: any;
+  storeId: string;
 
   loading: boolean;
   error: string | null;
@@ -40,6 +46,12 @@ interface AcademyContextType {
 
   getEventDetails: (eventId: string) => Promise<any>;
 
+  getInstructorDetails: (instructorId: string) => Promise<any>;
+
+  getNewsDetails: (newsId: string) => Promise<any>;
+
+  getBlogDetails: (blogId: string) => Promise<any>;
+
   refetch: () => void;
 }
 
@@ -53,18 +65,27 @@ const AcademyContext = createContext<AcademyContextType | undefined>(
 
 export function AcademyProvider({
   children,
+  initialStoreId = "",
 }: {
   children: ReactNode;
+  initialStoreId?: string;
 }) {
   // =========================
   // STATES
   // =========================
 
-  const [heroData, setHeroData] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
-  const [courses, setCourses] = useState<any[]>([]);
-  const [gallery, setGallery] = useState<any[]>([]);
-  const [events, setEvents] = useState<any[]>([]);
+  const [storeId] = useState<string>(
+    initialStoreId || import.meta.env.VITE_APP_STORE_ID || ""
+  );
+
+  const [heroData, setHeroData] = useState<any>(null);
+  const [categories, setCategories] = useState<any>(null);
+  const [courses, setCourses] = useState<any>(null);
+  const [gallery, setGallery] = useState<any>(null);
+  const [events, setEvents] = useState<any>(null);
+  const [instructors, setInstructors] = useState<any>(null);
+  const [news, setNews] = useState<any>(null);
+  const [blog, setBlog] = useState<any>(null);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -118,6 +139,9 @@ export function AcademyProvider({
           coursesRes,
           galleryRes,
           eventsRes,
+          instructorsRes,
+          newsRes,
+          blogRes,
         ] = await Promise.all([
           fetch(API_ENDPOINTS.HERO.GET_ALL),
 
@@ -128,6 +152,12 @@ export function AcademyProvider({
           fetch(API_ENDPOINTS.GALLERY.GET_ALL),
 
           fetch(API_ENDPOINTS.EVENTS.GET_ALL),
+
+          fetch(API_ENDPOINTS.INSTRUCTORS.GET_ALL),
+
+          fetch(API_ENDPOINTS.NEWS.GET_ALL),
+
+          fetch(API_ENDPOINTS.BLOG.GET_ALL),
         ]);
 
         // =========================
@@ -139,20 +169,29 @@ export function AcademyProvider({
         const coursesJson = await coursesRes.json();
         const galleryJson = await galleryRes.json();
         const eventsJson = await eventsRes.json();
+        const instructorsJson = await instructorsRes.json();
+        const newsJson = await newsRes.json();
+        const blogJson = await blogRes.json();
 
         // =========================
         // SAVE DATA
         // =========================
 
-        setHeroData(heroJson || []);
+        setHeroData(heroJson);
 
-        setCategories(categoriesJson || []);
+        setCategories(categoriesJson);
 
-        setCourses(coursesJson || []);
+        setCourses(coursesJson);
 
-        setGallery(galleryJson || []);
+        setGallery(galleryJson);
 
-        setEvents(eventsJson || []);
+        setEvents(eventsJson);
+
+        setInstructors(instructorsJson);
+
+        setNews(newsJson);
+
+        setBlog(blogJson);
       } catch (err: any) {
         console.error("AcademyContext Error:", err);
 
@@ -164,6 +203,65 @@ export function AcademyProvider({
 
     fetchAllData();
   }, [refreshKey]);
+
+  // =========================
+  // ALLDATA MEMOIZED
+  // =========================
+
+  const allData = useMemo(() => {
+    const catsArray = categories?.data || [];
+    const uniqueCats = Array.from(new Set(catsArray.map((c: any) => typeof c === 'string' ? c : c.name)));
+    const mappedCategories = uniqueCats.map((cat: any) => ({
+      category_id: cat,
+      name: cat,
+      slug: cat.toLowerCase(),
+    }));
+
+    const heroesArray = heroData?.data || [];
+    const homeMedia = heroesArray.map((hero: any) => ({
+      shop_type_id: "academy",
+      video_link: "",
+      image_1: hero.image,
+      image_2: "",
+      image_3: "",
+    }));
+
+    return {
+      shop_details: {
+        shopname: import.meta.env.VITE_APP_SHOP_NAME || "Oxford Academy",
+        shopcontactnumber: "+918156998798",
+        shop_type: [
+          { shop_type_id: "academy", slug: "academy", name: "Academy" }
+        ],
+        display_contact_numbers: [
+          { label: "Phone", value: "+918156998798" }
+        ],
+        display_contact_emails: [
+          { label: "Email", value: "oxfordwdr@gmail.com" }
+        ]
+      },
+      logos: [
+        {
+          file_url: "https://lms-videos-jahfar.s3.ap-south-1.amazonaws.com/hero/1779087457785-Gemini_Generated_Image_2agk9c2agk9c2agk%20%281%29.png"
+        }
+      ],
+      social_media_links: {
+        facebook: "https://facebook.com",
+        instagram: "https://instagram.com",
+        youtube: "https://youtube.com",
+        linkedin: "https://linkedin.com",
+        twitter: "https://twitter.com"
+      },
+      course_categories: mappedCategories,
+      home_media: homeMedia,
+      gallery: gallery?.data || [],
+      events: events?.data || [],
+      instructors: instructors?.data || [],
+      news: news?.data || [],
+      blogs: blog?.data || [],
+      content_documents: []
+    };
+  }, [heroData, categories, courses, gallery, events, instructors, news, blog]);
 
   // =========================
   // GET COURSES BY CATEGORY
@@ -179,7 +277,8 @@ export function AcademyProvider({
         throw new Error("Failed to fetch category courses");
       }
 
-      return await response.json();
+      const res = await response.json();
+      return res?.data || [];
     } catch (error) {
       console.error(error);
       return [];
@@ -200,7 +299,8 @@ export function AcademyProvider({
         throw new Error("Failed to fetch course details");
       }
 
-      return await response.json();
+      const res = await response.json();
+      return res?.data || null;
     } catch (error) {
       console.error(error);
       return null;
@@ -221,7 +321,8 @@ export function AcademyProvider({
         throw new Error("Failed to fetch gallery details");
       }
 
-      return await response.json();
+      const res = await response.json();
+      return res?.data || null;
     } catch (error) {
       console.error(error);
       return null;
@@ -242,7 +343,74 @@ export function AcademyProvider({
         throw new Error("Failed to fetch event details");
       }
 
-      return await response.json();
+      const res = await response.json();
+      return res?.data || null;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  // =========================
+  // GET NEWS DETAILS
+  // =========================
+
+  const getNewsDetails = async (newsId: string) => {
+    try {
+      const response = await fetch(
+        API_ENDPOINTS.NEWS.GET_DETAILS(newsId)
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch news details");
+      }
+
+      const res = await response.json();
+      return res?.data || null;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  // =========================
+  // GET BLOG DETAILS
+  // =========================
+
+  const getBlogDetails = async (blogId: string) => {
+    try {
+      const response = await fetch(
+        API_ENDPOINTS.BLOG.GET_DETAILS(blogId)
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch blog details");
+      }
+
+      const res = await response.json();
+      return res?.data || null;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  // =========================
+  // GET INSTRUCTOR DETAILS
+  // =========================
+
+  const getInstructorDetails = async (instructorId: string) => {
+    try {
+      const response = await fetch(
+        API_ENDPOINTS.INSTRUCTORS.GET_DETAILS(instructorId)
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch instructor details");
+      }
+
+      const res = await response.json();
+      return res?.data || null;
     } catch (error) {
       console.error(error);
       return null;
@@ -261,6 +429,11 @@ export function AcademyProvider({
         courses,
         gallery,
         events,
+        instructors,
+        news,
+        blog,
+        allData,
+        storeId,
 
         loading,
         error,
@@ -272,6 +445,9 @@ export function AcademyProvider({
         getCourseDetails,
         getGalleryDetails,
         getEventDetails,
+        getInstructorDetails,
+        getNewsDetails,
+        getBlogDetails,
 
         refetch,
       }}

@@ -24,7 +24,7 @@ function formatDisplayDate(value) {
 
 function normalizeEvent(item, index) {
   if (!item || typeof item !== 'object') return null;
-  const id = item.id ?? item.event_id ?? index + 1;
+  const id = item.id ?? item._id ?? item.event_id ?? index + 1;
   const rawStart = item.start_date ?? item.start_date_time ?? item.date ?? item.created_at ?? '';
   return {
     id,
@@ -79,9 +79,9 @@ export default function AcademyEvents() {
     const raw = allData?.gallery ?? allData?.gallery_images ?? [];
     const list = Array.isArray(raw) ? raw : (raw?.items ? raw.items : []);
     return list
-      .filter((item) => item && (item.image_url || item.url))
+      .filter((item) => item && (item.image_url || item.url || item.image))
       .map((item) => ({
-        id: item.id,
+        id: item.id ?? item._id,
         url: item.image_url ?? item.url ?? item.image,
         title: item.title ?? item.caption ?? '',
       }));
@@ -200,22 +200,25 @@ export default function AcademyEvents() {
                   {galleryItems.length === 0 ? (
                     <p className="academy-news-blog-loading" style={{ paddingTop: '1rem' }}>No gallery images yet.</p>
                   ) : (
-                    <div className="academy-gallery-grid academy-gallery-grid--events">
-                      {galleryItems.map((item) => (
-                        <div key={item.id || item.url} className="academy-gallery-card academy-gallery-card--styled">
-                          <div className="academy-gallery-card__image-wrap">
-                            <img
-                              src={item.url}
-                              alt={item.title || 'Gallery'}
-                              loading="lazy"
-                            />
-                          </div>
-                          <div className="academy-gallery-card__body">
-                            {item.title && <h4 className="academy-gallery-card__title">{item.title}</h4>}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                   <div className="academy-gallery-grid academy-gallery-grid--events">
+  {galleryItems.map((item) => (
+    <div key={item.id || item.url} className="academy-gallery-card academy-gallery-card--styled">
+      {/* ADD THIS LINK WRAPPER */}
+      <Link to={`/academy/gallery/${item.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+        <div className="academy-gallery-card__image-wrap">
+          <img
+            src={item.url}
+            alt={item.title || 'Gallery'}
+            loading="lazy"
+          />
+        </div>
+        <div className="academy-gallery-card__body">
+          {item.title && <h4 className="academy-gallery-card__title">{item.title}</h4>}
+        </div>
+      </Link>
+    </div>
+  ))}
+</div>
                   )}
                 </SwiperSlide>
               </Swiper>

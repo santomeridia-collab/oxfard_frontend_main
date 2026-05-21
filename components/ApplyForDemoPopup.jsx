@@ -92,16 +92,16 @@ export default function ApplyForDemoPopup({ courses = [], onClose }) {
 
         const fullPhone = `${formData.country_code}${formData.student_phone}`.replace(/[^\d+]/g, '');
 
+        // Build payload expected by DEMO endpoint
         const payload = {
-            course_id: formData.course_id,
-            student_name: formData.student_name,
-            student_email: formData.student_email,
-            student_phone: fullPhone,
-            enrollment_type: 'demo'
+            fullName: formData.student_name,
+            email: formData.student_email,
+            phoneNumber: fullPhone,
+            course: courses.find(c => c.id === formData.course_id)?.title || formData.course_id
         };
 
         try {
-            const response = await fetch(API_ENDPOINTS.PUBLIC.ENROLL(formData.course_id), {
+            const response = await fetch(API_ENDPOINTS.DEMO.POST || API_ENDPOINTS.DEMO.GET, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -118,7 +118,8 @@ export default function ApplyForDemoPopup({ courses = [], onClose }) {
                 throw new Error(data.message || 'Something went wrong. Please try again.');
             }
 
-            setEnrolledData(data);
+            // Store response but also keep submitted values for display
+            setEnrolledData({ ...payload, ...data });
             setSuccess(true);
         } catch (err) {
             console.error('Apply for demo error:', err);

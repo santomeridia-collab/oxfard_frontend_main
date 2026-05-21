@@ -83,7 +83,6 @@ function normalizeReviewsPayload(data) {
 }
 
 export default function ReviewsSection() {
-  const { storeId } = useShopData();
   const isMobile = useIsMobile();
   const [expanded, setExpanded] = useState(false);
   const [reviewsList, setReviewsList] = useState([]);
@@ -93,21 +92,24 @@ export default function ReviewsSection() {
   const [summaryLoading, setSummaryLoading] = useState(true);
   const [summaryError, setSummaryError] = useState(null);
 
+  // Fetch reviews using the new endpoint
   useEffect(() => {
-    if (!storeId) {
-      setReviewsLoading(false);
-      return;
-    }
     let cancelled = false;
     setReviewsLoading(true);
     setReviewsError(null);
-    fetch(API_ENDPOINTS.CONTACT.REVIEWS(storeId))
+    fetch(API_ENDPOINTS.CONTACT.GET_REVIEWS)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch reviews');
         return res.json();
       })
       .then((data) => {
-        if (!cancelled) setReviewsList(normalizeReviewsPayload(data));
+        if (!cancelled) {
+          // Handle different response formats
+          const reviewsArray = Array.isArray(data) 
+            ? data 
+            : (Array.isArray(data?.data) ? data.data : []);
+          setReviewsList(reviewsArray);
+        }
       })
       .catch((err) => {
         if (!cancelled) setReviewsError(err.message || 'Failed to load reviews');
@@ -116,32 +118,49 @@ export default function ReviewsSection() {
         if (!cancelled) setReviewsLoading(false);
       });
     return () => { cancelled = true; };
-  }, [storeId]);
+  }, []);
 
+  // Calculate summary from reviews
   useEffect(() => {
-    if (!storeId) {
+    if (reviewsList.length === 0) {
+      setSummary(null);
       setSummaryLoading(false);
       return;
     }
-    let cancelled = false;
-    setSummaryLoading(true);
-    setSummaryError(null);
-    fetch(API_ENDPOINTS.CONTACT.REVIEWS_SUMMARY(storeId))
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch review summary');
-        return res.json();
-      })
-      .then((data) => {
-        if (!cancelled) setSummary(data);
-      })
-      .catch((err) => {
-        if (!cancelled) setSummaryError(err.message || 'Failed to load summary');
-      })
-      .finally(() => {
-        if (!cancelled) setSummaryLoading(false);
+
+    try {
+      setSummaryLoading(true);
+      setSummaryError(null);
+
+      const total = reviewsList.length;
+      const ratingCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+      let totalRating = 0;
+
+      reviewsList.forEach((review) => {
+        const rating = Math.round(Number(review.rating) || 0);
+        if (rating >= 1 && rating <= 5) {
+          ratingCounts[rating]++;
+          totalRating += rating;
+        }
       });
-    return () => { cancelled = true; };
-  }, [storeId]);
+
+      const averageRating = total > 0 ? (totalRating / total).toFixed(1) : 0;
+
+      setSummary({
+        total_count: total,
+        average_rating: averageRating,
+        rating_5: ratingCounts[5],
+        rating_4: ratingCounts[4],
+        rating_3: ratingCounts[3],
+        rating_2: ratingCounts[2],
+        rating_1: ratingCounts[1],
+      });
+    } catch (err) {
+      setSummaryError(err.message || 'Failed to calculate summary');
+    } finally {
+      setSummaryLoading(false);
+    }
+  }, [reviewsList]);
 
   const allReviews = reviewsList;
   const reviews = allReviews.filter(isReviewVisible);

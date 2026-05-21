@@ -75,7 +75,7 @@ export default function AcademyContact() {
 
   // Get shop contact details from display_contact_numbers / display_contact_emails (first value, no fallback)
   const { phone: shopContactNumber, email: shopEmail } = getPrimaryDisplayContact(allData);
-  const address = allData?.shop_details?.address || 'Learning Center Address';
+  const address = allData?.shop_details?.address || 'Khadeeja BuildingNilambur Road,Wandoor';
   const openTime = allData?.shop_details?.opentime || '09:00 AM';
   const closeTime = allData?.shop_details?.closetime || '06:00 PM';
   const shopName = allData?.shop_details?.shopname || 'Academy';
@@ -146,24 +146,22 @@ export default function AcademyContact() {
         : '';
 
       const payload = {
-        store_id: storeId,
-        ...formData,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        email: formData.email,
         telephone: fullTelephone,
+        submission_type: formData.submission_type,
+        subject: formData.subject,
+        description: formData.description,
       };
-      // Remove UI-only fields
-      delete payload.country_code;
-      delete payload.phone_number;
 
       // Only include rating if the submission type is 'review' or 'rating'
-      // Mapping 'rating' option to 'review' for backend compatibility if needed
       if (formData.submission_type === 'review' || formData.submission_type === 'rating') {
         payload.rating = Number(formData.rating) || 1;
         // If the backend specifically only likes "review" type with rating:
         if (formData.submission_type === 'rating') {
           payload.submission_type = 'review';
         }
-      } else {
-        delete payload.rating;
       }
 
       const response = await fetch(API_ENDPOINTS.CONTACT.SUBMIT, {

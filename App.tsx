@@ -17,6 +17,8 @@ import ScrollToTop from './components/ScrollToTop';
 import BackToTopButton from './components/BackToTopButton';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import './styles/academy.css';
+import GalleryDetail from './pages/GalleryDetail';
+
 
 function App() {
     // Access store ID from environment variable
@@ -36,10 +38,12 @@ function App() {
                     <Route path="contact" element={<AcademyContact />} />
                     <Route path="blog" element={<Navigate to="/academy/news" replace />} />
                     <Route path="blog/:id" element={<BlogDetail />} />
+                  
                     <Route path="news" element={<AcademyNews />} />
                     <Route path="news/:id" element={<NewsDetail />} />
                     <Route path="events-gallery" element={<AcademyEvents />} />
                     <Route path="event/:id" element={<EventDetail />} />
+                    <Route path="gallery/:id" element={<GalleryDetail />} />
                     <Route path="trust-safety" element={<AcademyTrustSafety />} />
                     <Route path="terms-service" element={<AcademyTermsService />} />
                     <Route path="privacy-and-policy" element={<AcademyPrivacyAndPolicy />} />

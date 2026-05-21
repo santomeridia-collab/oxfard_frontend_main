@@ -29,14 +29,14 @@ export default function EventDetail() {
     const event = useMemo(() => {
         const raw = allData?.events ?? allData?.event_list ?? [];
         const list = Array.isArray(raw) ? raw : (raw?.items ? raw.items : []);
-        const found = list.find(item => String(item.id) === String(id));
+        const found = list.find(item => String(item.id ?? item._id) === String(id));
         if (!found) return null;
         const startStr = found.start_date ?? found.start_date_time ?? found.date ?? '';
         const endStr = found.end_date ?? found.end_date_time ?? '';
         const fullDesc = typeof found.description === 'string' ? found.description : (found.content ?? '');
         const shortDesc = fullDesc.length > 250 ? fullDesc.slice(0, 250).trim() + '…' : fullDesc;
         return {
-            id: found.id,
+            id: found.id ?? found._id,
             title: found.title ?? found.name ?? 'Untitled',
             date: formatDisplayDate(startStr),
             endDate: endStr ? formatDisplayDate(endStr) : '',

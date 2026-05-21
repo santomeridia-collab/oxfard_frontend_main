@@ -134,7 +134,7 @@ const Footer = () => {
 
                 <div className="academy-footer__bottom">
                     <p className="academy-footer__copyright">
-                        © {new Date().getFullYear()} <span>ApkaKhata</span>. All rights reserved.
+                        © {new Date().getFullYear()} <span>SantoMeridia Research Labs Pvt Ltd</span>. All rights reserved.
                     </p>
                 </div>
             </div>

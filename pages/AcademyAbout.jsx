@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import AcademyHeader from '../components/AcademyHeader';
 import AcademyHero from '../components/AcademyHero';
 import Footer from '../components/Footer';
+import { useAcademyData } from '../context/AcademyContext';
 import '../styles/academy.css';
 
 const galleryImages = [
@@ -13,7 +14,7 @@ const galleryImages = [
   '/images/about5.jpg',
 ];
 
-const instructors = [
+const defaultInstructors = [
   {
     name: 'Expert Faculty',
     specialization: 'Professional Training',
@@ -87,6 +88,11 @@ const GalleryGrid = ({ items, initialCount = 3 }) => {
 };
 
 export default function AcademyAbout() {
+  const { allData } = useAcademyData();
+  const instructors = allData?.instructors?.length
+    ? allData.instructors
+    : defaultInstructors;
+
   return (
     <>
       <Helmet>
@@ -259,13 +265,13 @@ export default function AcademyAbout() {
           </section>
 
           {/* Gallery */}
-          <section className="academy-about-gallery-section">
+          {/* <section className="academy-about-gallery-section">
             <h2 className="academy-section-title">
               Gallery & Highlights
             </h2>
 
             <GalleryGrid items={galleryImages} />
-          </section>
+          </section> */}
 
           {/* Instructors */}
           <section className="academy-instructors-section">
@@ -284,8 +290,15 @@ export default function AcademyAbout() {
 
                     <div className="academy-instructor-image-wrapper">
                       <img
-                        src={instructor.image_url}
-                        alt={instructor.name}
+                        src={encodeURI(
+                          instructor.photo ||
+                          instructor.image_url ||
+                          instructor.image ||
+                          instructor.imageUrl ||
+                          instructor.url ||
+                          '/images/instructor1.jpg'
+                        )}
+                        alt={instructor.name || instructor.title || 'Instructor'}
                         className="academy-instructor-image"
                       />
                     </div>
