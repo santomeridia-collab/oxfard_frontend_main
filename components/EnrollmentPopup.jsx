@@ -90,14 +90,14 @@ export default function EnrollmentPopup({ courseId, courseTitle, onClose }) {
         const fullPhone = `${formData.country_code}${formData.student_phone}`.replace(/[^\d+]/g, '');
 
         const payload = {
-            course_id: courseId,
-            student_name: formData.student_name,
-            student_email: formData.student_email,
-            student_phone: fullPhone
+            fullName: formData.student_name,
+            email: formData.student_email,
+            phoneNumber: fullPhone,
+            course: courseTitle || courseId,
         };
 
         try {
-            const response = await fetch(API_ENDPOINTS.PUBLIC.ENROLL(courseId), {
+            const response = await fetch(API_ENDPOINTS.PUBLIC.ENROLL(), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ export default function EnrollmentPopup({ courseId, courseTitle, onClose }) {
                 throw new Error(data.message || 'Something went wrong. Please try again.');
             }
 
-            setEnrolledData(data);
+            setEnrolledData({ ...payload, ...data });
             setSuccess(true);
         } catch (err) {
             console.error('Enrollment error:', err);
@@ -139,15 +139,15 @@ export default function EnrollmentPopup({ courseId, courseTitle, onClose }) {
                             <div className="academy-enrolled-details__grid">
                                 <div className="academy-enrolled-details__item">
                                     <span className="label">Name:</span>
-                                    <span className="value">{enrolledData?.student_name}</span>
+                                    <span className="value">{enrolledData?.fullName}</span>
                                 </div>
                                 <div className="academy-enrolled-details__item">
                                     <span className="label">Email:</span>
-                                    <span className="value">{enrolledData?.student_email}</span>
+                                    <span className="value">{enrolledData?.email}</span>
                                 </div>
                                 <div className="academy-enrolled-details__item">
                                     <span className="label">Phone:</span>
-                                    <span className="value">{enrolledData?.student_phone}</span>
+                                    <span className="value">{enrolledData?.phoneNumber}</span>
                                 </div>
                             </div>
                         </div>

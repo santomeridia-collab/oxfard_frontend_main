@@ -86,9 +86,9 @@ export const API_ENDPOINTS = {
         ? `${API_BASE_URL}/courses`
         : `${API_BASE_URL}/courses/category/${encodeURIComponent(category)}`,
 
-    // Enroll in course
-    ENROLL: (courseId: string) =>
-      `${API_BASE_URL}/courses/${courseId}/enroll`,
+    // Enroll in course (POST)
+    ENROLL: () =>
+      `${API_BASE_URL}/enroll`,
   },
 
   // =========================
@@ -120,10 +120,10 @@ export const API_ENDPOINTS = {
   // =========================
   INSTRUCTORS: {
     // Get all instructors from the requested host
-    GET_ALL: 'http://18.60.105.32/api/instructors',
+    GET_ALL: `${API_BASE_URL}/instructors`,
 
     // Get instructor details
-    GET_DETAILS: (instructorId: string) => `http://18.60.105.32/api/instructors/${instructorId}`,
+    GET_DETAILS: (instructorId: string) => `${API_BASE_URL}/instructors/${instructorId}`,
   },
   
   // =========================

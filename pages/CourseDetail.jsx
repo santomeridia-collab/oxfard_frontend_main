@@ -63,41 +63,25 @@ export default function CourseDetail() {
           response
         );
 
-        // API returns:
-        // {
-        //   success: true,
-        //   data: { ...course }
-        // }
+        const data = response?.success && response?.data
+          ? response.data
+          : response;
 
-        if (response?.success && response?.data) {
-
-          const data = response.data;
-
+        if (data && (data._id || data.course_id)) {
           const normalizedCourse = {
-
-            id: data._id,
-
-            title: data.courseName,
-
-            category: data.category,
-
-            description: data.description,
-
-            duration: data.duration,
-
-            studyMode: data.mode,
-
-            price: data.amount,
-
-            image: data.image,
-
-            createdAt: data.createdAt,
+            id: data._id ?? data.course_id,
+            title: data.courseName || data.title || data.name,
+            category: data.category || data.category_name || data.category?.name,
+            description: data.description || data.summary || data.shortDescription,
+            duration: data.duration || data.course_duration,
+            studyMode: data.mode || data.studyMode || data.study_mode,
+            price: data.amount || data.price || data.final_price,
+            image: data.image || data.image_url || data.cover_image,
+            createdAt: data.createdAt || data.created_at,
           };
 
           setCourse(normalizedCourse);
-
         } else {
-
           setError('Course not found');
         }
 
