@@ -30,10 +30,10 @@ const defaultInstructors = [
 ];
 
 const stats = {
-  totalCourses: 50,
-  totalStudents: 5000,
-  totalInstructors: 25,
-  yearsExperience: 28,
+  totalCourses: 4,
+  totalCenters: 2,
+  // totalInstructors: 25,
+  yearsExperience: 21,
 };
 
 const GalleryGrid = ({ items, initialCount = 3 }) => {
@@ -233,21 +233,21 @@ export default function AcademyAbout() {
 
                   <div className="academy-stat-item">
                     <div className="academy-stat-number">
-                      {stats.totalStudents.toLocaleString()}+
+                      {stats.totalCenters.toLocaleString()}+
                     </div>
                     <div className="academy-stat-label">
-                      Students
+                      Centers
                     </div>
                   </div>
 
-                  <div className="academy-stat-item">
+                  {/* <div className="academy-stat-item">
                     <div className="academy-stat-number">
                       {stats.totalInstructors}+
                     </div>
                     <div className="academy-stat-label">
                       Instructors
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="academy-stat-item">
                     <div className="academy-stat-number">

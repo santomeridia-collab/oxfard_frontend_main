@@ -228,7 +228,7 @@ export function AcademyProvider({
 
     return {
       shop_details: {
-        shopname: import.meta.env.VITE_APP_SHOP_NAME || "Oxford Academy",
+        shopname: import.meta.env.VITE_APP_SHOP_NAME || "OWEOC",
         shopcontactnumber: "+918156998798",
         shop_type: [
           { shop_type_id: "academy", slug: "academy", name: "Academy" }

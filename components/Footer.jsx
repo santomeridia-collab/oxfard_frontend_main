@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useShopData } from '../context/AcademyContext';
+import footerLogo from '../assets/OWEOC pdf LOGO-1.png';
 
 /** Parse social_media_links from get-all-data API: array of { links: { facebook, instagram, ... }, status } */
 const getSocialLinks = (social_media_links) => {
@@ -55,7 +56,7 @@ const Footer = () => {
     const location = useLocation();
     const pathname = location.pathname.replace(/\/$/, '') || '/';
     const shopName = allData?.shop_details?.shopname || 'Academy';
-    const logoUrl = allData?.logos?.[0]?.file_url;
+    const logoUrl = footerLogo;
     const socialLinks = getSocialLinks(allData?.social_media_links);
 
     const scrollToTop = () => {

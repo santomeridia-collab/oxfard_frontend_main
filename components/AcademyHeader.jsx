@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAcademyData, useShopData } from '../context/AcademyContext';
 import { getPrimaryDisplayContact } from '../utils/academyUtils';
 import ThemeToggle from './ThemeToggle';
 import Breadcrumb from './Breadcrumb';
 import API_ENDPOINTS from '../config/endpoints';
+import headerLogo from '../assets/OWEOC pdf LOGO-1.png';
 import '../styles/academy.css';
 
 
@@ -48,6 +49,7 @@ export default function AcademyHeader() {
   const coursesDropdownRef = useRef(null);
   const enquiryDropdownRef = useRef(null);
   const { allData, storeId } = useShopData();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const {
@@ -224,7 +226,7 @@ export default function AcademyHeader() {
             <button
               type="button"
               className="academy-topbar-enquiry-btn"
-              onClick={openEnquiryModal}
+              onClick={() => navigate('/academy/contact')}
               aria-label="Enquiry Now"
             >
               Enquiry Now
@@ -306,20 +308,16 @@ export default function AcademyHeader() {
       <header className="academy-global-header">
       <div className="academy-container academy-header-inner">
         <Link to="/academy" className="academy-header-logo">
-          {allData?.logos?.[0]?.file_url ? (
-            <div className="academy-header-logo-wrapper">
-              <img
-                src={allData.logos[0].file_url}
-                alt={allData?.shop_details?.shopname || 'Academy'}
-                className="academy-header-logo-img"
-              />
-              <span className="academy-header-shop-name">
-                {allData?.shop_details?.shopname || 'Academy'}
-              </span>
-            </div>
-          ) : (
-            allData?.shop_details?.shopname || 'Academy'
-          )}
+          <div className="academy-header-logo-wrapper">
+            <img
+              src={headerLogo}
+              alt={allData?.shop_details?.shopname || 'Academy'}
+              className="academy-header-logo-img"
+            />
+            <span className="academy-header-shop-name">
+              {allData?.shop_details?.shopname || 'Academy'}
+            </span>
+          </div>
         </Link>
 
         {/* Mobile: theme (left of hamburger) + hamburger on right */}
