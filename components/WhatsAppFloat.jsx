@@ -10,11 +10,11 @@ export default function WhatsAppFloat() {
   
   // Build wa.me URL: digits only (no +, spaces, dashes, parentheses)
   const digitsOnly = (rawNumber && rawNumber.replace(/\D/g, '')) || FALLBACK_NUMBER;
-  const whatsappUrl = `https://wa.me/${digitsOnly}`;
+  // const whatsappUrl = `https://wa.me/${digitsOnly}`;
 
   return (
     <a
-      href={whatsappUrl}
+      // href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
       className="academy-whatsapp-float"
