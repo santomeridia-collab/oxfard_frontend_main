@@ -5,6 +5,7 @@ import AcademyCourses from './pages/AcademyCourses';
 import CourseDetail from './pages/CourseDetail';
 import AcademyAbout from './pages/AcademyAbout';
 import AcademyContact from './pages/AcademyContact';
+import AcademyVerification from './pages/AcademyVerification';
 import AcademyTrustSafety from './pages/AcademyTrustSafety';
 import AcademyTermsService from './pages/AcademyTermsService';
 import AcademyPrivacyAndPolicy from './pages/AcademyPrivacyAndPolicy';
@@ -35,6 +36,7 @@ function App() {
                     <Route path="courses" element={<AcademyCourses />} />
                     <Route path="course/:courseId" element={<CourseDetail />} />
                     <Route path="about" element={<AcademyAbout />} />
+                    <Route path="verification" element={<AcademyVerification />} />
                     <Route path="contact" element={<AcademyContact />} />
                     <Route path="blog" element={<Navigate to="/academy/news" replace />} />
                     <Route path="blog/:id" element={<BlogDetail />} />

@@ -341,7 +341,7 @@ export default function AcademyHeader() {
         <nav className="academy-header-nav">
           <Link to="/academy" className={`academy-header-link ${isActive('/academy') ? 'active' : ''}`}>Home</Link>
           <Link to="/academy/about" className={`academy-header-link ${isActive('/academy/about') ? 'active' : ''}`}>About</Link>
-          <Link to="#" className="academy-header-link" onClick={(e) => e.preventDefault()}>Verification</Link>
+          <Link to="/academy/verification" className={`academy-header-link ${isActive('/academy/verification') ? 'active' : ''}`}>Verification</Link>
 
           {/* Courses label with dropdown (click to open, outside click to close) */}
         {/* Courses label with dropdown */}
@@ -426,12 +426,9 @@ export default function AcademyHeader() {
               </Link>
 
               <Link
-                to="#"
-                className="academy-mobile-menu__link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  closeMobileMenu();
-                }}
+                to="/academy/verification"
+                className={`academy-mobile-menu__link ${isActive('/academy/verification') ? 'active' : ''}`}
+                onClick={closeMobileMenu}
               >
                 Verification
               </Link>
