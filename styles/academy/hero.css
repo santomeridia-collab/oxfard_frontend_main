@@ -108,7 +108,7 @@
 
 /* Overline label above title */
 .academy-hero__inner::before {
-  content: '✦ CREATIVE ARTS ACADEMY';
+  /* content: '✦ CREATIVE ARTS ACADEMY'; */
   display: block;
   font-size: 11px;
   font-weight: 600;
