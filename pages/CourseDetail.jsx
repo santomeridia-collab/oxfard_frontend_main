@@ -285,11 +285,11 @@ export default function CourseDetail() {
 
                   <div className="academy-course-pricing">
 
-                    <div className="academy-course-pricing__price">
+                    {/* <div className="academy-course-pricing__price">
 
                       ₹{course.price}
 
-                    </div>
+                    </div> */}
 
                     <button
                       className="academy-course-pricing__btn"
@@ -329,7 +329,7 @@ export default function CourseDetail() {
         {/* OVERVIEW */}
         {/* ========================= */}
 
-        <section className="academy-section academy-overview">
+        {/* <section className="academy-section academy-overview">
 
           <div className="academy-container">
 
@@ -343,7 +343,7 @@ export default function CourseDetail() {
 
           </div>
 
-        </section>
+        </section> */}
 
       </main>
 
