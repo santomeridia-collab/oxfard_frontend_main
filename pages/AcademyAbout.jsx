@@ -350,7 +350,7 @@ export default function AcademyAbout() {
                 </h4>
 
                 <a
-                  href="tel:+918156998798"
+                  href="tel:+91 9447260668"
                   className="academy-about-contact-info-link"
                 >
                   +91 8156998798

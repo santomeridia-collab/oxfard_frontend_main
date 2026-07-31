@@ -5,7 +5,7 @@ import { getPrimaryDisplayContact } from '../utils/academyUtils';
 import ThemeToggle from './ThemeToggle';
 import Breadcrumb from './Breadcrumb';
 import API_ENDPOINTS from '../config/endpoints';
-import headerLogo from '../assets/OWEOC pdf LOGO-1.png';
+import headerLogo from '../assets/IMG_6267.png';
 import '../styles/academy.css';
 
 

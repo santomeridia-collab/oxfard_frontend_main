@@ -229,12 +229,12 @@ export function AcademyProvider({
     return {
       shop_details: {
         shopname: import.meta.env.VITE_APP_SHOP_NAME || "OWEOC",
-        shopcontactnumber: "+918156998798",
+        shopcontactnumber: "+91 9447260668",
         shop_type: [
           { shop_type_id: "academy", slug: "academy", name: "Academy" }
         ],
         display_contact_numbers: [
-          { label: "Phone", value: "+918156998798" }
+          { label: "Phone", value: "+91 9447260668" }
         ],
         display_contact_emails: [
           { label: "Email", value: "oxfordwdr@gmail.com" }
