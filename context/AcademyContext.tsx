@@ -94,7 +94,7 @@ export function AcademyProvider({
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     const savedTheme = localStorage.getItem("academy-theme");
-    return (savedTheme as "light" | "dark") || "dark";
+    return (savedTheme as "light" | "dark") || "light";
   });
 
   // =========================

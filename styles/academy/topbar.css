@@ -1,7 +1,6 @@
 /* ===== TOP BAR (Contact strip above header) ===== */
 .academy-header-wrapper {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 1001;
   box-shadow: 0 1px 0 var(--academy-topbar-border);
 }
