@@ -2,6 +2,7 @@
 .academy-courses-section {
   padding: 80px 0;
   background: var(--academy-bg);
+  scroll-margin-top: 20px;
 }
 
 .academy-section-header {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 /**
@@ -8,9 +8,19 @@ import { useLocation } from 'react-router-dom';
  * It also resets focus to the top of the page for accessibility.
  */
 export default function ScrollToTop() {
-    const { pathname } = useLocation();
+    const { pathname, state } = useLocation();
+    const prevPathnameRef = useRef(pathname);
 
     useEffect(() => {
+        const wasOnCourses = prevPathnameRef.current.startsWith('/academy/courses');
+        const isOnCourses = pathname.startsWith('/academy/courses');
+        prevPathnameRef.current = pathname;
+
+        // When switching between courses or categories with scrollToCourses, allow smooth section scroll
+        if (wasOnCourses && isOnCourses && state?.scrollToCourses) {
+            return;
+        }
+
         // Reset scroll position to the top
         window.scrollTo({ top: 0, behavior: 'auto' });
 
@@ -28,7 +38,7 @@ export default function ScrollToTop() {
                 }
             }
         }, 100); // Small delay to ensure the new page content is rendered
-    }, [pathname]);
+    }, [pathname, state]);
 
     return null;
 }

@@ -229,13 +229,14 @@ export function AcademyProvider({
     return {
       shop_details: {
         // shopname: import.meta.env.VITE_APP_SHOP_NAME || "OWEOC",
-        shopname: (
-    <>
-      Oxford Women Empowerment
-      <br />
-      Online & Offline Center
-    </>
-  ),
+        shopname: "Oxford Women Empowerment Online & Offline Center",
+        shopname_display: (
+          <>
+            Oxford Women Empowerment
+            <br />
+            Online & Offline Center
+          </>
+        ),
         shopcontactnumber: "+91 9447260668",
         shop_type: [
           { shop_type_id: "academy", slug: "academy", name: "Academy" }
@@ -274,7 +275,7 @@ export function AcademyProvider({
   // GET COURSES BY CATEGORY
   // =========================
 
-  const getCoursesByCategory = async (category: string) => {
+  const getCoursesByCategory = useCallback(async (category: string) => {
     try {
       const response = await fetch(
         API_ENDPOINTS.COURSES.GET_BY_CATEGORY(category)
@@ -290,7 +291,7 @@ export function AcademyProvider({
       console.error(error);
       return [];
     }
-  };
+  }, []);
 
   // =========================
   // GET COURSE DETAILS

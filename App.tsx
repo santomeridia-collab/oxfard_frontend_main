@@ -34,6 +34,7 @@ function App() {
                 <Route path="/academy">
                     <Route index element={<AcademyHome />} />
                     <Route path="courses" element={<AcademyCourses />} />
+                    <Route path="courses/category/:categoryName" element={<AcademyCourses />} />
                     <Route path="course/:courseId" element={<CourseDetail />} />
                     <Route path="about" element={<AcademyAbout />} />
                     <Route path="verification" element={<AcademyVerification />} />
