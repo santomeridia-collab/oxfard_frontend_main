@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams, useLocation } from "react-router-dom";
 
 import { Helmet } from "react-helmet-async";
 
@@ -21,12 +21,21 @@ export default function AcademyCourses() {
   // =========================
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const { categoryName } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const coursesSectionRef = useRef(null);
 
   // =========================
   // CONTEXT DATA
   // =========================
 
-  const { categories, courses, loading, error } = useAcademyData();
+  const { categories, courses, loading, error, getCoursesByCategory } =
+    useAcademyData();
+
+  const [categoryCourses, setCategoryCourses] = useState([]);
+  const [categoryLoading, setCategoryLoading] = useState(false);
+  const [categoryError, setCategoryError] = useState("");
 
   const { allData } = useShopData();
   console.log(allData, "data");
@@ -35,7 +44,27 @@ export default function AcademyCourses() {
   // ACTIVE CATEGORY
   // =========================
 
-  const activeCategory = searchParams.get("category") || "all";
+  const getCategoryName = (category) =>
+    typeof category === "string" ? category : category?.name || "";
+
+  const getCategorySlug = (category) =>
+    getCategoryName(category)
+      .toLowerCase()
+      .trim()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  const decodeCategoryParam = (category) => {
+    try {
+      return decodeURIComponent(category);
+    } catch {
+      return category;
+    }
+  };
+
+  const rawCategoryParam = categoryName || searchParams.get("category") || "all";
+  const categoryParam = decodeCategoryParam(rawCategoryParam);
 
   // =========================
   // HERO MEDIA
@@ -69,11 +98,70 @@ export default function AcademyCourses() {
 
   const allCategories = categories?.data || [];
 
+  const normalizedCategories = allCategories
+    .map((cat) => {
+      const name = getCategoryName(cat);
+
+      return {
+        id: name,
+        name,
+        slug: getCategorySlug(cat),
+      };
+    })
+    .filter((cat) => cat.id && cat.name);
+
+  const activeCategory =
+    categoryParam === "all"
+      ? "all"
+      : normalizedCategories.find(
+          (cat) => cat.id === categoryParam || cat.slug === categoryParam,
+        )?.name || categoryParam;
+
+  useEffect(() => {
+    let isActive = true;
+
+    const fetchCategoryCourses = async () => {
+      if (activeCategory === "all") {
+        setCategoryCourses([]);
+        return;
+      }
+
+      setCategoryLoading(true);
+      setCategoryError("");
+
+      try {
+        const data = await getCoursesByCategory(activeCategory);
+
+        if (isActive) {
+          setCategoryCourses(data);
+        }
+      } catch {
+        if (isActive) {
+          setCategoryError("Failed to load category courses.");
+          setCategoryCourses([]);
+        }
+      } finally {
+        if (isActive) {
+          setCategoryLoading(false);
+        }
+      }
+    };
+
+    fetchCategoryCourses();
+
+    return () => {
+      isActive = false;
+    };
+  }, [activeCategory, getCoursesByCategory]);
+
   // =========================
   // NORMALIZE COURSE DATA
   // =========================
 
-  const allCourses = (courses?.data || []).map((course) => ({
+  const coursesSource =
+    activeCategory === "all" ? courses?.data || [] : categoryCourses;
+
+  const allCourses = coursesSource.map((course) => ({
     id: course._id,
 
     title: course.courseName,
@@ -100,10 +188,29 @@ export default function AcademyCourses() {
   const filteredCourses =
     activeCategory === "all"
       ? allCourses
-      : allCourses.filter(
-          (course) =>
-            course.category?.toLowerCase() === activeCategory.toLowerCase(),
-        );
+      : allCourses;
+
+  // =========================
+  // SCROLL TO COURSES SECTION
+  // =========================
+
+  const scrollToCourses = useCallback(() => {
+    setTimeout(() => {
+      if (coursesSectionRef.current) {
+        coursesSectionRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 120);
+  }, []);
+
+  useEffect(() => {
+    // When a category route is accessed or scrollToCourses state is passed, auto-scroll to courses
+    if (categoryName || location.state?.scrollToCourses) {
+      scrollToCourses();
+    }
+  }, [categoryName, location.state?.scrollToCourses, scrollToCourses]);
 
   // =========================
   // HANDLE CATEGORY CHANGE
@@ -112,11 +219,13 @@ export default function AcademyCourses() {
   const handleCategoryChange = (categoryId) => {
     if (categoryId === "all") {
       setSearchParams({});
+      navigate("/academy/courses", { state: { scrollToCourses: true } });
     } else {
-      setSearchParams({
-        category: categoryId,
+      navigate(`/academy/courses/category/${encodeURIComponent(categoryId)}`, {
+        state: { scrollToCourses: true },
       });
     }
+    scrollToCourses();
   };
 
   return (
@@ -146,7 +255,11 @@ export default function AcademyCourses() {
 
         {/* Courses */}
 
-        <section className="academy-courses-section">
+        <section
+          ref={coursesSectionRef}
+          id="courses-section"
+          className="academy-courses-section"
+        >
           <div className="academy-container">
             <div className="academy-section-header">
               <h2 className="academy-section-title">
@@ -157,32 +270,29 @@ export default function AcademyCourses() {
             {/* Category Filter */}
 
             <CategoryFilterBar
-              categories={[
-                {
-                  id: "all",
-                  name: "All",
-                },
-
-                ...allCategories.map((cat) => ({
-                  id: cat,
-                  name: cat,
-                })),
-              ]}
+              categories={normalizedCategories}
               active={activeCategory}
               onChange={handleCategoryChange}
             />
 
             {/* Loading */}
 
-            {loading && <p className="academy-loading">Loading courses...</p>}
+            {(loading || categoryLoading) && (
+              <p className="academy-loading">Loading courses...</p>
+            )}
 
             {/* Error */}
 
-            {error && <p className="academy-error">{error}</p>}
+            {(error || categoryError) && (
+              <p className="academy-error">{error || categoryError}</p>
+            )}
 
             {/* Empty */}
 
-            {!loading && !error && filteredCourses.length === 0 && (
+            {!loading &&
+              !categoryLoading &&
+              !error &&
+              filteredCourses.length === 0 && (
               <p className="academy-empty">No courses found.</p>
             )}
 

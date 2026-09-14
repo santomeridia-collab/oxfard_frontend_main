@@ -39,23 +39,24 @@ export default function AcademyHero({
 
             {heroes.map((item) => (
               <SwiperSlide key={item._id}>
-                <div
+                <img
                   className="academy-hero__slide-image"
-                  style={{
-                    backgroundImage: `url(${item.image})`
-                  }}
+                  src={item.image}
+                  alt={item.title || 'Oxford Education banner'}
+                  loading="eager"
+                  fetchPriority="high"
                 />
 
                 <div className="academy-hero__overlay"></div>
+
+                <p className="academy-hero__subtitle academy-hero__subtitle--top">
+                  {item.subTitle}
+                </p>
 
                 <div className="academy-hero__inner">
                   <h1 className="academy-hero__title">
                     {/* {item.title} */}
                   </h1>
-
-                  <p className="academy-hero__subtitle">
-                    {item.subTitle}
-                  </p>
 
                   {showCTA && (
                     onApplyForDemo ? (

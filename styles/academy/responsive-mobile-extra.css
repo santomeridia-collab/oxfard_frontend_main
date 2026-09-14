@@ -8,9 +8,18 @@
     font-size: clamp(1.8rem, 9vw, 2.4rem);
   }
 
+  .academy-hero__slider .swiper-slide {
+    padding: 56px 12px 48px;
+  }
+
   .academy-hero__subtitle {
     font-size: 14px;
     margin-bottom: 28px;
+  }
+
+  .academy-hero__subtitle--top {
+    margin: 0;
+    padding: 12px 14px;
   }
 
   .academy-course-card__footer {

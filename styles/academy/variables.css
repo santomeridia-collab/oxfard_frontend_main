@@ -31,8 +31,9 @@
   --academy-header-bg: #FAF7F2;
   --academy-header-accent: #F97316;
   --academy-header-active-bg: rgba(211, 150, 59, 0.089);
-  --academy-hero-overlay-1: rgba(255, 255, 255, 0.3);
-  --academy-hero-overlay-2: rgba(255, 255, 255, 0.6);
+  /* Keep the light-mode hero image crisp instead of washing it out. */
+  --academy-hero-overlay-1: rgba(255, 255, 255, 0.08);
+  --academy-hero-overlay-2: rgba(255, 255, 255, 0.22);
 
   /* Footer Light */
   --academy-footer-bg: rgba(255, 255, 255, 0.85);

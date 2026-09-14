@@ -129,12 +129,21 @@
     transform: translateZ(0);
   }
 
+  .academy-hero__slider .swiper-slide {
+    padding: 72px 16px 56px;
+  }
+
   .academy-hero__title {
     font-size: clamp(2rem, 8vw, 3rem);
   }
 
   .academy-hero__subtitle {
     font-size: 16px;
+  }
+
+  .academy-hero__subtitle--top {
+    margin: 0;
+    padding: 14px 16px;
   }
 
   /* Container */

@@ -63,6 +63,9 @@ export default function AcademyHeader() {
    // NORMALIZE CATEGORY DATA
    // =========================
  
+   const getCategoryName = (category) =>
+    typeof category === 'string' ? category : category?.name || '';
+
    const allCategories = categories?.data || [];
   const { phone: shopNumber, email: shopEmail } = getPrimaryDisplayContact(allData);
   console.log('categories in header:', allCategories);
@@ -315,7 +318,7 @@ export default function AcademyHeader() {
               className="academy-header-logo-img"
             />
             <span className="academy-header-shop-name">
-              {allData?.shop_details?.shopname || 'Academy'}
+              {allData?.shop_details?.shopname_display || allData?.shop_details?.shopname || 'Academy'}
             </span>
           </div>
         </Link>
@@ -363,6 +366,7 @@ export default function AcademyHeader() {
   <div className="academy-header-dropdown">
     <Link
       to="/academy/courses"
+      state={{ scrollToCourses: true }}
       className="academy-dropdown-item"
       onClick={() => setDropdownOpen(false)}
     >
@@ -372,11 +376,12 @@ export default function AcademyHeader() {
     {allCategories.map((cat, index) => (
       <Link
         key={index}
-        to={`/academy/courses?category=${encodeURIComponent(cat)}`}
+        to={`/academy/courses/category/${encodeURIComponent(getCategoryName(cat))}`}
+        state={{ scrollToCourses: true }}
         className="academy-dropdown-item"
         onClick={() => setDropdownOpen(false)}
       >
-        {cat}
+        {getCategoryName(cat)}
       </Link>
     ))}
   </div>
@@ -443,14 +448,23 @@ export default function AcademyHeader() {
                 </button>
 {mobileCoursesDropdownOpen && allCategories.length > 0 && (
   <div className="academy-mobile-menu__submenu">
+    <Link
+      to="/academy/courses"
+      state={{ scrollToCourses: true }}
+      className="academy-mobile-menu__sublink"
+      onClick={closeMobileMenu}
+    >
+      All Courses
+    </Link>
     {allCategories.map((cat, index) => (
       <Link
         key={index}
-        to={`/academy/courses?category=${encodeURIComponent(cat)}`}
+        to={`/academy/courses/category/${encodeURIComponent(getCategoryName(cat))}`}
+        state={{ scrollToCourses: true }}
         className="academy-mobile-menu__sublink"
         onClick={closeMobileMenu}
       >
-        {cat}
+        {getCategoryName(cat)}
       </Link>
     ))}
   </div>
