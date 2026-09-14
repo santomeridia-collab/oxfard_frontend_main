@@ -50,7 +50,7 @@ export default function AcademyHero({
 
                 <div className="academy-hero__inner">
                   <h1 className="academy-hero__title">
-                    {item.title}
+                    {/* {item.title} */}
                   </h1>
 
                   <p className="academy-hero__subtitle">

@@ -21,7 +21,7 @@ export default function CourseCard({ course }) {
         </div>
         <p className="academy-course-card__desc">{course.shortDescription}</p>
         <div className="academy-course-card__footer">
-          {course.price && <span className="academy-course-card__price">{currencySymbol}{course.price}</span>}
+          {/* {course.price && <span className="academy-course-card__price">{currencySymbol}{course.price}</span>} */}
           <Link to={`/academy/course/${course.id}`} className="academy-course-card__btn">View Details</Link>
         </div>
       </div>

@@ -94,7 +94,7 @@ export function AcademyProvider({
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     const savedTheme = localStorage.getItem("academy-theme");
-    return (savedTheme as "light" | "dark") || "dark";
+    return (savedTheme as "light" | "dark") || "light";
   });
 
   // =========================
@@ -228,13 +228,20 @@ export function AcademyProvider({
 
     return {
       shop_details: {
-        shopname: import.meta.env.VITE_APP_SHOP_NAME || "OWEOC",
-        shopcontactnumber: "+918156998798",
+        // shopname: import.meta.env.VITE_APP_SHOP_NAME || "OWEOC",
+        shopname: (
+    <>
+      Oxford Women Empowerment
+      <br />
+      Online & Offline Center
+    </>
+  ),
+        shopcontactnumber: "+91 9447260668",
         shop_type: [
           { shop_type_id: "academy", slug: "academy", name: "Academy" }
         ],
         display_contact_numbers: [
-          { label: "Phone", value: "+918156998798" }
+          { label: "Phone", value: "+91 9447260668" }
         ],
         display_contact_emails: [
           { label: "Email", value: "oxfordwdr@gmail.com" }
